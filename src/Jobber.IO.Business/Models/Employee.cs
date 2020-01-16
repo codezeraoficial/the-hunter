@@ -11,8 +11,7 @@ namespace Jobber.IO.Business.Models
         public List<string> Image { get; set; }
         public string Document { get; set; }
         public int Age { get; set; }
-        public DateTime BirthDate { get; set; }
-        public KindOfEmployee KindOfEmployee { get; set; }
+        public DateTime BirthDate { get; set; }        
         public KindPlan KindPlan { get; set; }
         public Occupation Occupation { get; set; }        
         public Address Address { get; set; }
@@ -20,5 +19,6 @@ namespace Jobber.IO.Business.Models
 
         public IEnumerable<Tech> Techs { get; set; }
         public IEnumerable<Skill> Skills { get; set; }
+        public IEnumerable<Occupation> Occupations { get; set; }
     }
 }

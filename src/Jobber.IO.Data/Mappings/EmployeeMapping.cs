@@ -34,19 +34,19 @@ namespace Jobber.IO.Data.Mappings
 
 
             builder.HasOne(e => e.Address)
-                .WithOne(a => a.Employee);
-
-            builder.HasOne(e => e.Occupation)
-                .WithOne(o => o.Employee);
+                .WithOne(a => a.Employee);     
 
             builder.HasMany(e => e.Techs)
                 .WithOne(t => t.Employee)
                 .HasForeignKey(e => e.EmployeeId);
 
-
             builder.HasMany(e => e.Skills)
                 .WithOne(s => s.Employee)
                 .HasForeignKey(e => e.EmployeeId);
+
+            builder.HasMany(e => e.Occupations)
+              .WithOne(s => s.Employee)
+              .HasForeignKey(e => e.EmployeeId);
 
 
             builder.ToTable("Employees");

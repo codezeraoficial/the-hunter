@@ -8,6 +8,6 @@ namespace Jobber.IO.Business.Models
     {
         National = 1,
         Multinational = 2,
-        StateOwned,
+        StateOwned = 3
     }
 }

@@ -4,7 +4,7 @@
     {
         Plus = 1,
         Premium = 2,        
-        Basic      
+        Basic  = 3,    
       
     }
 }

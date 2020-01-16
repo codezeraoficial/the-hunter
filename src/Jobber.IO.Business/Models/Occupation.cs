@@ -4,8 +4,12 @@ namespace Jobber.IO.Business.Models
 {
     public class Occupation: Entity
     {
-        public string OccupationName { get; set; }
-        public int Experience { get; set; }
+        public string Name { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
+        public string CompanyName { get; set; }
+        public string Description { get; set; }
+
 
         public Guid EmployeeId { get; set; }
         public Employee Employee { get; set; }

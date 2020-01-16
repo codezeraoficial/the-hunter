@@ -12,7 +12,7 @@ namespace Jobber.IO.Data.Mappings
         {
             builder.HasKey(c => c.Id);
 
-            builder.Property(c => c.CompanyName)
+            builder.Property(c => c.Name)
                  .IsRequired()
                  .HasColumnType("varchar(50)");
 
@@ -26,15 +26,14 @@ namespace Jobber.IO.Data.Mappings
 
             builder.Property(c => c.Email)
                 .IsRequired()
-                .HasColumnType("varchar(60)");    
-
-            
+                .HasColumnType("varchar(60)");   
+                        
             builder.HasOne(c => c.Address)
-                .WithOne(a => a.Company);    
+                .WithOne(a => a.Company);
 
-
-            // Seria uma coleção de cargos?
-
+            builder.HasMany(e => e.Jobbers)
+                .WithOne(s => s.Company)
+                .HasForeignKey(e => e.CompanyId);
 
             builder.ToTable("Companies");
         }

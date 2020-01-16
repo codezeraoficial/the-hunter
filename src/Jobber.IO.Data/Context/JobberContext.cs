@@ -13,7 +13,8 @@ namespace Jobber.IO.Data.Context
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Occupation> Occupations { get; set; }
         public DbSet<Skill> Skills { get; set; }
-        public DbSet<Tech> Teches { get; set; }
+        public DbSet<Tech> Techs { get; set; }
+        public DbSet<JobOffer> JobOffers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {          
