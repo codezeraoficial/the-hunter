@@ -19,15 +19,19 @@ namespace Jobber.IO.Data.Mappings
                  .HasColumnType("varchar(1000)");
 
             builder.Property(c => c.Long)
-                 .IsRequired();                  
+                 .IsRequired();      
+                 
+                 
+            builder.HasOne(e => e.Occupation)
+                .WithOne(a => a.JobOfferId);     
                  
             builder.HasMany(e => e.Techs)
-                .WithOne(t => t.Employee)
-                .HasForeignKey(e => e.EmployeeId);
+                .WithOne(t => t.JobOffer)
+                .HasForeignKey(e => e.JobOfferId);
 
             builder.HasMany(e => e.Skills)
-                .WithOne(s => s.Employee)
-                .HasForeignKey(e => e.EmployeeId);
+                .WithOne(s => s.JobOffer)
+                .HasForeignKey(e => e.JobOfferId);                
                        
             builder.ToTable("JobOffers");
         }
