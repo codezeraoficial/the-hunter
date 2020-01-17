@@ -14,8 +14,5 @@ namespace Jobber.IO.Business.Models
         
         public KindPlan KindPlan { get; set; }
         
-        public IEnumerable<Tech> Techs { get; set; }
-        public IEnumerable<Skill> Skills { get; set; }
-        public IEnumerable<Occupation> Occupations { get; set; }
     }
 }
