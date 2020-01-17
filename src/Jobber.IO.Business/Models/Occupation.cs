@@ -13,5 +13,8 @@ namespace Jobber.IO.Business.Models
 
         public Guid EmployeeId { get; set; }
         public Employee Employee { get; set; }
+        
+        public Guid JobOfferId { get; set; }
+        public JobOffer JobOffer { get; set; }
     }
 }
