@@ -13,6 +13,9 @@ namespace Jobber.IO.Business.Models
         
         public Guid CompanyId { get; set; }
         public Company Company { get; set; }
+        
+        public IEnumerable<Tech> Techs { get; set; }
+        public IEnumerable<Skill> Skills { get; set; }
 
     }
 }
