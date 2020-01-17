@@ -12,8 +12,7 @@ namespace Jobber.IO.Business.Models
         public string Document { get; set; }
         public int Age { get; set; }
         public DateTime BirthDate { get; set; }        
-        public KindPlan KindPlan { get; set; }
-        public Occupation Occupation { get; set; }        
+        public KindPlan KindPlan { get; set; }            
         public Address Address { get; set; }
         public bool Active { get; set; }
 
