@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Jobber.IO.Data.Migrations
 {
-    [DbContext(typeof(JobberContext))]
+    [DbContext(typeof(JobberDbContext))]
     [Migration("20200118180413_INITIAL_CREATE")]
     partial class INITIAL_CREATE
     {

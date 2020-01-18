@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace Jobber.IO.Data.Context
 {
-    public class JobberContext: DbContext
+    public class JobberDbContext: DbContext
     {
-        public JobberContext(DbContextOptions options) : base(options) { }
+        public JobberDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Company> Companies { get; set; }
@@ -18,7 +18,7 @@ namespace Jobber.IO.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(JobberContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(JobberDbContext).Assembly);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {

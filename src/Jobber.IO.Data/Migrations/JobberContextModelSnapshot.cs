@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Jobber.IO.Data.Migrations
 {
-    [DbContext(typeof(JobberContext))]
+    [DbContext(typeof(JobberDbContext))]
     partial class JobberContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

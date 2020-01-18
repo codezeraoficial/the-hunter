@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Jobber.IO.Business.Interfaces;
 using Jobber.IO.Data.Context;
+using Jobber.IO.Data.Repository;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace Jobber.IO.Server
 {
@@ -29,8 +25,18 @@ namespace Jobber.IO.Server
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddDbContext<JobberContext>(options
+            services.AddDbContext<JobberDbContext>(options
               => options.UseSqlServer(Configuration.GetConnectionString("JobberConnection")));
+
+            services.AddScoped<JobberDbContext>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IJobOfferRepository, JobOfferRepository>();
+            services.AddScoped<IOccupationRepository, OccupationRepository>();
+            services.AddScoped<ISkillRepository, SkillRepository>();
+            services.AddScoped<ITechRepository, TechRepository>();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
