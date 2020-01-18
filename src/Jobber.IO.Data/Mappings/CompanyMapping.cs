@@ -18,11 +18,7 @@ namespace Jobber.IO.Data.Mappings
 
             builder.Property(c => c.Document)
                  .IsRequired()
-                 .HasColumnType("varchar(20)");
-
-            builder.Property(c => c.Image)
-                 .IsRequired()
-                 .HasColumnType("varchar(100)");         
+                 .HasColumnType("varchar(20)");         
 
             builder.Property(c => c.Email)
                 .IsRequired()
@@ -31,7 +27,7 @@ namespace Jobber.IO.Data.Mappings
             builder.HasOne(c => c.Address)
                 .WithOne(a => a.Company);
 
-            builder.HasMany(e => e.Jobbers)
+            builder.HasMany(e => e.JobOffers)
                 .WithOne(s => s.Company)
                 .HasForeignKey(e => e.CompanyId);
 

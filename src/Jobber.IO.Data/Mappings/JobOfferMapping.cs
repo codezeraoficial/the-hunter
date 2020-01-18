@@ -23,7 +23,7 @@ namespace Jobber.IO.Data.Mappings
                  
                  
             builder.HasOne(e => e.Occupation)
-                .WithOne(a => a.JobOfferId);     
+                .WithOne(a => a.JobOffer);     
                  
             builder.HasMany(e => e.Techs)
                 .WithOne(t => t.JobOffer)

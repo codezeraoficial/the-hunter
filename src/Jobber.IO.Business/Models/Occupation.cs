@@ -2,7 +2,7 @@
 
 namespace Jobber.IO.Business.Models
 {
-    public class Occupation: Entity
+    public class Occupation : Entity
     {
         public string Name { get; set; }
         public DateTime StartDate { get; set; }
@@ -13,8 +13,9 @@ namespace Jobber.IO.Business.Models
 
         public Guid EmployeeId { get; set; }
         public Employee Employee { get; set; }
-        
+
         public Guid JobOfferId { get; set; }
         public JobOffer JobOffer { get; set; }
+
     }
 }

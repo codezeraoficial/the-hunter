@@ -17,8 +17,7 @@ namespace Jobber.IO.Data.Context
         public DbSet<JobOffer> JobOffers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {          
-
+        {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(JobberContext).Assembly);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))

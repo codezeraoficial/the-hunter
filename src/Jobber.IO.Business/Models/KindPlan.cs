@@ -2,9 +2,10 @@
 {
     public enum KindPlan
     {
-        Plus = 1,
-        Premium = 2,        
-        Basic  = 3,    
+        Basic = 1,
+        Plus,
+        Premium       
+          
       
     }
 }

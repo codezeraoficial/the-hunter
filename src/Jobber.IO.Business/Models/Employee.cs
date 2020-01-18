@@ -7,8 +7,7 @@ namespace Jobber.IO.Business.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
-        public List<string> Image { get; set; }
+        public string Email { get; set; }        
         public string Document { get; set; }
         public int Age { get; set; }
         public DateTime BirthDate { get; set; }        

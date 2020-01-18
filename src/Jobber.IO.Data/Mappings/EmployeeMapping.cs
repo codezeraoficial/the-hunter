@@ -18,11 +18,7 @@ namespace Jobber.IO.Data.Mappings
 
             builder.Property(e => e.LastName)
                  .IsRequired()
-                 .HasColumnType("varchar(100)");
-
-            builder.Property(e => e.Image)
-                 .IsRequired()
-                 .HasColumnType("varchar(100)");
+                 .HasColumnType("varchar(100)");            
 
             builder.Property(e => e.Document)
                 .IsRequired()
