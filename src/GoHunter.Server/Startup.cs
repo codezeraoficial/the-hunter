@@ -1,6 +1,8 @@
+using AutoMapper;
 using GoHunter.Business.Interfaces;
 using GoHunter.Data.Context;
 using GoHunter.Data.Repository;
+using GoHunter.Server.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -20,7 +22,6 @@ namespace GoHunter.Server
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
@@ -28,18 +29,12 @@ namespace GoHunter.Server
             services.AddDbContext<JobberDbContext>(options
               => options.UseSqlServer(Configuration.GetConnectionString("JobberConnection")));
 
-            services.AddScoped<JobberDbContext>();
-            services.AddScoped<IAddressRepository, AddressRepository>();
-            services.AddScoped<ICompanyRepository, CompanyRepository>();
-            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            services.AddScoped<IJobOfferRepository, JobOfferRepository>();
-            services.AddScoped<IOccupationRepository, OccupationRepository>();
-            services.AddScoped<ISkillRepository, SkillRepository>();
-            services.AddScoped<ITechRepository, TechRepository>();
+            services.AddAutoMapper(typeof(Startup));
+
+            services.ResolveDependecies();
            
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
