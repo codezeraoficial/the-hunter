@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GoHunter.Data.Migrations
 {
-    [DbContext(typeof(JobberDbContext))]
+    [DbContext(typeof(GoHunterDbContext))]
     partial class JobberContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -1,7 +1,5 @@
 using AutoMapper;
-using GoHunter.Business.Interfaces;
 using GoHunter.Data.Context;
-using GoHunter.Data.Repository;
 using GoHunter.Server.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,8 +24,8 @@ namespace GoHunter.Server
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
-            services.AddDbContext<JobberDbContext>(options
-              => options.UseSqlServer(Configuration.GetConnectionString("JobberConnection")));
+            services.AddDbContext<GoHunterDbContext>(options
+              => options.UseSqlServer(Configuration.GetConnectionString("GoHunterConnection")));
 
             services.AddAutoMapper(typeof(Startup));
 

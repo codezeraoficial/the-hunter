@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace GoHunter.Data.Context
 {
-    public class JobberDbContext: DbContext
+    public class GoHunterDbContext: DbContext
     {
-        public JobberDbContext(DbContextOptions options) : base(options) { }
+        public GoHunterDbContext(DbContextOptions options) : base(options) { }
 
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Company> Companies { get; set; }
@@ -28,7 +28,7 @@ namespace GoHunter.Data.Context
                         property.SetColumnType("varchar(100)");
                     }
         
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(JobberDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(GoHunterDbContext).Assembly);
 
             foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             {

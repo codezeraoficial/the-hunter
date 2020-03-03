@@ -11,7 +11,7 @@ namespace GoHunter.Data.Repository
 {
     public class OccupationRepository : Repository<Occupation>, IOccupationRepository
     {
-        public OccupationRepository(JobberDbContext context) : base(context) { }
+        public OccupationRepository(GoHunterDbContext context) : base(context) { }
 
         public async Task<Occupation> GetOccupationEmployee(Guid id)
         {

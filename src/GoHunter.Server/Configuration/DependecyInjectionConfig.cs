@@ -1,4 +1,5 @@
 ﻿using GoHunter.Business.Interfaces;
+using GoHunter.Business.Notifications;
 using GoHunter.Business.Services;
 using GoHunter.Data.Context;
 using GoHunter.Data.Repository;
@@ -10,7 +11,7 @@ namespace GoHunter.Server.Configuration
     {
         public static IServiceCollection ResolveDependecies(this IServiceCollection services)
         {
-            services.AddScoped<JobberDbContext>();
+            services.AddScoped<GoHunterDbContext>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<ICompanyRepository, CompanyRepository>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
@@ -19,6 +20,7 @@ namespace GoHunter.Server.Configuration
             services.AddScoped<ISkillRepository, SkillRepository>();
             services.AddScoped<ITechRepository, TechRepository>();
 
+            services.AddScoped<INotifier, Notifier>();
             services.AddScoped<ICompanyService, CompanyrService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
 

@@ -9,7 +9,7 @@ namespace GoHunter.Data.Repository
 {
     public class CompanyRepository : Repository<Company>, ICompanyRepository
     {
-        public CompanyRepository(JobberDbContext context) : base(context) { }
+        public CompanyRepository(GoHunterDbContext context) : base(context) { }
 
         public async Task<Company> GetCompanyAddress(Guid id)
         {

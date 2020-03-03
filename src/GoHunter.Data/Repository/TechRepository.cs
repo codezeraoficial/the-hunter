@@ -11,7 +11,7 @@ namespace GoHunter.Data.Repository
 {
     public class TechRepository : Repository<Tech>, ITechRepository
     {
-        public TechRepository(JobberDbContext context) : base(context) { }
+        public TechRepository(GoHunterDbContext context) : base(context) { }
 
         public async Task<Tech> GetTechEmployee(Guid id)
         {

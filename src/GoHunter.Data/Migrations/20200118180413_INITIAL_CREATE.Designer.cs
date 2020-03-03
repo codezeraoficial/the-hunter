@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GoHunter.Data.Migrations
 {
-    [DbContext(typeof(JobberDbContext))]
+    [DbContext(typeof(GoHunterDbContext))]
     [Migration("20200118180413_INITIAL_CREATE")]
     partial class INITIAL_CREATE
     {

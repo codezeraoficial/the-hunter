@@ -11,7 +11,7 @@ namespace GoHunter.Data.Repository
 {
     public class SkillRepository : Repository<Skill>, ISkillRepository
     {
-        public SkillRepository(JobberDbContext context) : base(context) { }
+        public SkillRepository(GoHunterDbContext context) : base(context) { }
 
         public async Task<Skill> GetSkillEmployee(Guid id)
         {

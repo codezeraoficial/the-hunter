@@ -12,10 +12,10 @@ namespace GoHunter.Data.Repository
 {
     public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity, new()
     {
-        protected readonly JobberDbContext jobberDbContext;
+        protected readonly GoHunterDbContext jobberDbContext;
         protected readonly DbSet<TEntity> dbSet;
 
-        public Repository(JobberDbContext db)
+        public Repository(GoHunterDbContext db)
         {
             jobberDbContext = db;
             dbSet = db.Set<TEntity>();
