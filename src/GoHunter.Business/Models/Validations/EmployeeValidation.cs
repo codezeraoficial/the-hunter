@@ -18,7 +18,7 @@ namespace GoHunter.Business.Models.Validations
 
             RuleFor(e => e.Document.Length).Equal(CpfValidation.CpfLength)
                 .WithMessage("O campo Documento precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}");
-            RuleFor(f => CnpjValidacao.Validar(f.Document)).Equal(true)
+            RuleFor(f => CpfValidation.Validate(f.Document)).Equal(true)
                 .WithMessage("O documento fornecido é inválido.");
         }
     }

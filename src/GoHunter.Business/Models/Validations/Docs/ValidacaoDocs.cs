@@ -7,20 +7,18 @@ namespace GoHunter.Business.Models.Validations.Docs
     {
         public const int CpfLength = 11;
 
-        public static bool Validar(string cpf)
+        public static bool Validate(string cpf)
         {
-            var cpfNumbers = Utils.ApenasNumeros(cpf);
+            var cpfNumbers = Utils.OnlyNumbers(cpf);
 
             if (!LengthValid(cpfNumbers)) return false;
 
             return !HasRepeatedDigits(cpfNumbers) && HasValidsDigits(cpfNumbers);
         }
-
         private static bool LengthValid(string value)
         {
             return value.Length == CpfLength;
         }
-
         private static bool HasRepeatedDigits(string value)
         {
             string[] invalidNumbers =
@@ -39,38 +37,35 @@ namespace GoHunter.Business.Models.Validations.Docs
             return invalidNumbers.Contains(value);
         }
 
-        private static bool HasValidsDigits(string valor)
+        private static bool HasValidsDigits(string value)
         {
-            var number = valor.Substring(0, CpfLength - 2);
-            var digitoVerificador = new DigitoVerificador(number)
-                .ComMultiplicadoresDeAte(2, 11)
-                .Substituindo("0", 10, 11);
-            var firstDigit = digitoVerificador.CalculaDigito();
-            digitoVerificador.AddDigito(firstDigit);
-            var secondDigit = digitoVerificador.CalculaDigito();
+            var number = value.Substring(0, CpfLength - 2);
+            var verifyingDigit = new VerifyingDigit(number)
+                .WithMultipliersTo(2, 11)
+                .Replacing("0", 10, 11);
+            var firstDigit = verifyingDigit.GetDigitSum();
+            verifyingDigit.AddDigit(firstDigit);
+            var secondDigit = verifyingDigit.GetDigitSum();
 
-            return string.Concat(firstDigit, secondDigit) == valor.Substring(CpfLength - 2, 2);
+            return string.Concat(firstDigit, secondDigit) == value.Substring(CpfLength - 2, 2);
         }
     }
 
-    public class CnpjValidacao
+    public class CnpjValidation
     {
-        public const int TamanhoCnpj = 14;
-
-        public static bool Validar(string cnpj)
+        public const int CnpjLength = 14;
+        public static bool Validate(string cnpj)
         {
-            var cnpjNumeros = Utils.ApenasNumeros(cnpj);
+            var cnpjNumbers = Utils.OnlyNumbers(cnpj);
 
-            if (!TemTamanhoValido(cnpjNumeros)) return false;
-            return !TemDigitosRepetidos(cnpjNumeros) && TemDigitosValidos(cnpjNumeros);
+            if (!LengthValid(cnpjNumbers)) return false;
+            return !HasRepeatedDigits(cnpjNumbers) && HasValidsDigits(cnpjNumbers);
         }
-
-        private static bool TemTamanhoValido(string valor)
+        private static bool LengthValid(string valor)
         {
-            return valor.Length == TamanhoCnpj;
+            return valor.Length == CnpjLength;
         }
-
-        private static bool TemDigitosRepetidos(string valor)
+        private static bool HasRepeatedDigits(string value)
         {
             string[] invalidNumbers =
             {
@@ -85,91 +80,91 @@ namespace GoHunter.Business.Models.Validations.Docs
                 "88888888888888",
                 "99999999999999"
             };
-            return invalidNumbers.Contains(valor);
+            return invalidNumbers.Contains(value);
         }
 
-        private static bool TemDigitosValidos(string valor)
+        private static bool HasValidsDigits(string value)
         {
-            var number = valor.Substring(0, TamanhoCnpj - 2);
-            var digitoVerificador = new DigitoVerificador(number)
-                .ComMultiplicadoresDeAte(2, 11)
-                .Substituindo("0", 10, 11);
-            var firstDigit = digitoVerificador.CalculaDigito();
-            digitoVerificador.AddDigito(firstDigit);
-            var secondDigit = digitoVerificador.CalculaDigito();
+            var number = value.Substring(0, CnpjLength - 2);
+            var verifyingDigit = new VerifyingDigit(number)
+                .WithMultipliersTo(2, 11)
+                .Replacing("0", 10, 11);
+            var firstDigit = verifyingDigit.DigitSum();
+            verifyingDigit.AddDigit(firstDigit);
+            var secondDigit = verifyingDigit.DigitSum();
 
-            return string.Concat(firstDigit, secondDigit) == valor.Substring(TamanhoCnpj - 2, 2);
+            return string.Concat(firstDigit, secondDigit) == value.Substring(CnpjLength - 2, 2);
         }
     }
 
-    public class DigitoVerificador
+    public class VerifyingDigit
     {
-        private string _numero;
-        private const int Modulo = 11;
-        private readonly List<int> _multiplicadores = new List<int> { 2, 3, 4, 5, 6, 7, 8, 9 };
-        private readonly IDictionary<int, string> _substituicoes = new Dictionary<int, string>();
+        private string _number;
+        private const int Module = 11;
+        private readonly List<int> _multipliers = new List<int> { 2, 3, 4, 5, 6, 7, 8, 9 };
+        private readonly IDictionary<int, string> _replacements = new Dictionary<int, string>();
         private bool _complementarDoModulo = true;
 
-        public DigitoVerificador(string numero)
+        public VerifyingDigit(string number)
         {
-            _numero = numero;
+            _number = number;
         }
 
-        public DigitoVerificador ComMultiplicadoresDeAte(int primeiroMultiplicador, int ultimoMultiplicador)
+        public VerifyingDigit WithMultipliersTo(int primeiroMultiplicador, int ultimoMultiplicador)
         {
-            _multiplicadores.Clear();
+            _multipliers.Clear();
             for (var i = primeiroMultiplicador; i <= ultimoMultiplicador; i++)
             {
-                _multiplicadores.Add(i);
+                _multipliers.Add(i);
             }
 
             return this;
         }
 
-        public DigitoVerificador Substituindo(string substituto, params int[] digitos)
+        public VerifyingDigit Replacing(string substitute, params int[] digits)
         {
-            foreach (var i in digitos)
+            foreach (var i in digits)
             {
-                _substituicoes[i] = substituto;
+                _replacements[i] = substitute;
             }
 
             return this;
         }
 
-        public void AddDigito(string digito)
+        public void AddDigit(string digit)
         {
-            _numero = string.Concat(_numero, digito);
+            _number = string.Concat(_number, _number);
         }
 
-        public string CalculaDigito()
+        public string DigitSum()
         {
-            return !(_numero.Length > 0) ? "" : GetDigitSum();
+            return !(_number.Length > 0) ? "" : GetDigitSum();
         }
 
         public string GetDigitSum()
         {
-            var soma = 0;
-            for (int i = _numero.Length - 1, m = 0; i >= 0; i--)
+            var som = 0;
+            for (int i = _number.Length - 1, m = 0; i >= 0; i--)
             {
-                var produto = (int)char.GetNumericValue(_numero[1]) * _multiplicadores[m];
-                soma += produto;
+                var produt = (int)char.GetNumericValue(_number[1]) * _multipliers[m];
+                som += produt;
 
-                if (++m >= _multiplicadores.Count) m = 0;
+                if (++m >= _multipliers.Count) m = 0;
             }
 
-            var mod = (soma % Modulo);
-            var resultado = _complementarDoModulo ? Modulo - mod : mod;
+            var mod = (som % Module);
+            var result = _complementarDoModulo ? Module - mod : mod;
 
-            return _substituicoes.ContainsKey(resultado) ? _substituicoes[resultado] : resultado.ToString();
+            return _replacements.ContainsKey(result) ? _replacements[result] : result.ToString();
         }
     }
 
     public class Utils
     {
-        public static string ApenasNumeros(string valor)
+        public static string OnlyNumbers(string value)
         {
             var onlyNumber = "";
-            foreach (var s in valor)
+            foreach (var s in value)
             {
                 if (char.IsDigit(s))
                 {
