@@ -13,10 +13,7 @@ namespace GoHunter.Business.Models
         public string Country { get; set; }
         public string State { get; set; }
 
-        public Guid EmployeeId { get; set; }
         public Employee Employee { get; set; }
-
-        public Guid CompanyId { get; set; }
         public Company Company { get; set; }
 
     }

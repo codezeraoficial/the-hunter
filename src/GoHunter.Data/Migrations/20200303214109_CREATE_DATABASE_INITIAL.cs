@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GoHunter.Data.Migrations
 {
-    public partial class INITIAL_CREATE : Migration
+    public partial class CREATE_DATABASE_INITIAL : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace GoHunter.Data.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     Document = table.Column<string>(type: "varchar(20)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(60)", nullable: false),
+                    Image = table.Column<string>(type: "varchar(100)", nullable: true),
                     Active = table.Column<bool>(nullable: false),
                     KindPlan = table.Column<int>(nullable: false),
                     KindOfCompany = table.Column<int>(nullable: false)
@@ -31,7 +31,7 @@ namespace GoHunter.Data.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     FirstName = table.Column<string>(type: "varchar(50)", nullable: false),
                     LastName = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Email = table.Column<string>(type: "varchar(60)", nullable: false),
+                    Image = table.Column<string>(type: "varchar(100)", nullable: true),
                     Document = table.Column<string>(type: "varchar(14)", nullable: false),
                     Age = table.Column<int>(nullable: false),
                     BirthDate = table.Column<DateTime>(nullable: false),
@@ -135,7 +135,7 @@ namespace GoHunter.Data.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     Description = table.Column<string>(type: "varchar(1000)", nullable: false),
-                    Link = table.Column<string>(nullable: false),
+                    Link = table.Column<string>(type: "varchar(100)", nullable: false),
                     EmployeeId = table.Column<Guid>(nullable: false),
                     JobOfferId = table.Column<Guid>(nullable: false)
                 },
@@ -163,7 +163,7 @@ namespace GoHunter.Data.Migrations
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     Description = table.Column<string>(type: "varchar(1000)", nullable: false),
-                    Level = table.Column<int>(nullable: false),
+                    Level = table.Column<string>(type: "varchar(100)", nullable: false),
                     EmployeeId = table.Column<Guid>(nullable: false),
                     JobOfferId = table.Column<Guid>(nullable: false)
                 },

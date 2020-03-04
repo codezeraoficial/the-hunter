@@ -41,10 +41,10 @@ namespace GoHunter.Data.Mappings
                 .IsRequired()
                 .HasColumnType("varchar(50)");
 
-
             builder.Property(c => c.Country)
                 .IsRequired()
-                .HasColumnType("varchar(50)");            
+                .HasColumnType("varchar(50)");           
+
 
 
             builder.ToTable("Addresses");

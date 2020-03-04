@@ -19,33 +19,35 @@ namespace GoHunter.Business.Services
             _addressRepository = addressRepository;
         }
 
-        public async Task Add(Company company)
+        public async Task<bool> Add(Company company)
         {
             if (!ExecuteValidation(new CompanyValidation(), company)
-               || !ExecuteValidation(new AddressValidation(), company.Address)) return;
+               || !ExecuteValidation(new AddressValidation(), company.Address)) return false;
 
             if (_companyRepository.Get(c => c.Document == company.Document).Result.Any())
             {
                 Notify("There is already a company with the document informed.");
 
-                return;
+                return false;
             }
 
             await _companyRepository.Add(company);
+            return true;
         }
 
-        public async Task Update(Company company)
+        public async Task<bool> Update(Company company)
         {
-            if (!ExecuteValidation(new CompanyValidation(), company)) return;
+            if (!ExecuteValidation(new CompanyValidation(), company)) return false;
 
             if (_companyRepository.Get(c => c.Document == company.Document && c.Id != company.Id).Result.Any())
             {
                 Notify("Company does not exists.");
 
-                return;
+                return false;
             }
 
             await _companyRepository.Update(company);
+            return true;
         }
 
         public async Task UpdateAddress(Address address)
@@ -55,15 +57,23 @@ namespace GoHunter.Business.Services
             await _addressRepository.Update(address);
         }
 
-        public async Task Delete(Guid id)
+        public async Task<bool> Delete(Guid id)
         {
             if (_companyRepository.GetCompanyJobOffersAddress(id).Result.JobOffers.Any())
             {
                 Notify("The company has registered contracts.");
-                return;
+                return false;
+            }
+
+            var address = await _addressRepository.GetAddressByCompany(id);
+
+            if(address != null)
+            {
+                await _addressRepository.Delete(address.Id);
             }
 
             await _companyRepository.Delete(id);
+            return true;
         }
 
         public void Dispose()

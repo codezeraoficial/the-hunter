@@ -26,9 +26,9 @@ namespace GoHunter.Business.Services
             _notifier.Handle(new Notification(message));
         }
 
-        protected bool ExecuteValidation<TV, TE>(TV validacao, TE entidade) where TV: AbstractValidator<TE> where TE: Entity
+        protected bool ExecuteValidation<TV, TE>(TV validation, TE entiy) where TV: AbstractValidator<TE> where TE: Entity
         {
-            var validator = validacao.Validate(entidade);
+            var validator = validation.Validate(entiy);
 
             if (validator.IsValid) return true;
 

@@ -14,13 +14,13 @@ namespace GoHunter.Data.Repository
         public async Task<Address> GetAddressByCompany(Guid companyId)
         {
             return await jobberDbContext.Addresses.AsNoTracking()
-                .FirstOrDefaultAsync(a => a.CompanyId == companyId);
+                .FirstOrDefaultAsync(a => a.Company.Id == companyId);
         }
 
         public async Task<Address> GetAddressByEmployee(Guid employeeId)
         {
             return await jobberDbContext.Addresses.AsNoTracking()
-               .FirstOrDefaultAsync(a => a.EmployeeId == employeeId);
+               .FirstOrDefaultAsync(a => a.Employee.Id == employeeId);
         }
     }
 }

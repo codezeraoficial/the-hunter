@@ -23,12 +23,7 @@ namespace GoHunter.Data.Mappings
             builder.Property(e => e.Document)
                 .IsRequired()
                 .HasColumnType("varchar(14)");
-
-            builder.Property(e => e.Email)
-                .IsRequired()
-                .HasColumnType("varchar(60)");
-
-
+                       
             builder.HasOne(e => e.Address)
                 .WithOne(a => a.Employee);     
 

@@ -15,7 +15,7 @@ namespace GoHunter.Server.ViewModels
         [StringLength(1000, ErrorMessage = "The field {0} must have between {2} and {1} characteres", MinimumLength = 10)]
         public string Description { get; set; }
 
-        public int Level { get; set; }
+        public string Level { get; set; }
 
         public Guid EmployeeId { get; set; }    
 

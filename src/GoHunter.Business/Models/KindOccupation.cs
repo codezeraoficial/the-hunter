@@ -3,8 +3,8 @@
     public enum KindOccupation
     {
         Hired = 1,
-        OutSourced,
-        Freelancer,
-        Intern
+        OutSourced = 2,
+        Freelancer = 3,
+        Intern = 4
     }
 }

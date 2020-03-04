@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoHunter.Data.Migrations
 {
     [DbContext(typeof(GoHunterDbContext))]
-    [Migration("20200118180413_INITIAL_CREATE")]
-    partial class INITIAL_CREATE
+    [Migration("20200303214109_CREATE_DATABASE_INITIAL")]
+    partial class CREATE_DATABASE_INITIAL
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,9 +89,8 @@ namespace GoHunter.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(20)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(60)");
+                    b.Property<string>("Image")
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int>("KindOfCompany")
                         .HasColumnType("int");
@@ -127,13 +126,12 @@ namespace GoHunter.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(14)");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("varchar(60)");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
+
+                    b.Property<string>("Image")
+                        .HasColumnType("varchar(100)");
 
                     b.Property<int>("KindPlan")
                         .HasColumnType("int");
@@ -235,7 +233,7 @@ namespace GoHunter.Data.Migrations
 
                     b.Property<string>("Link")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -266,8 +264,9 @@ namespace GoHunter.Data.Migrations
                     b.Property<Guid>("JobOfferId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Level")
-                        .HasColumnType("int");
+                    b.Property<string>("Level")
+                        .IsRequired()
+                        .HasColumnType("varchar(100)");
 
                     b.Property<string>("Name")
                         .IsRequired()
