@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GoHunter.Data.Migrations
 {
     [DbContext(typeof(GoHunterDbContext))]
-    [Migration("20200303214109_CREATE_DATABASE_INITIAL")]
-    partial class CREATE_DATABASE_INITIAL
+    [Migration("20200304115550_CREATE_DATABASE")]
+    partial class CREATE_DATABASE
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,9 +35,6 @@ namespace GoHunter.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
-                    b.Property<Guid>("CompanyId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Complement")
                         .IsRequired()
                         .HasColumnType("varchar(250)");
@@ -45,9 +42,6 @@ namespace GoHunter.Data.Migrations
                     b.Property<string>("Country")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
-
-                    b.Property<Guid>("EmployeeId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Neighborhood")
                         .IsRequired()
@@ -67,12 +61,6 @@ namespace GoHunter.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CompanyId")
-                        .IsUnique();
-
-                    b.HasIndex("EmployeeId")
-                        .IsUnique();
-
                     b.ToTable("Addresses");
                 });
 
@@ -84,6 +72,9 @@ namespace GoHunter.Data.Migrations
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
+
+                    b.Property<Guid>("AddressId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Document")
                         .IsRequired()
@@ -104,6 +95,9 @@ namespace GoHunter.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AddressId")
+                        .IsUnique();
+
                     b.ToTable("Companies");
                 });
 
@@ -115,6 +109,9 @@ namespace GoHunter.Data.Migrations
 
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
+
+                    b.Property<Guid>("AddressId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Age")
                         .HasColumnType("int");
@@ -141,6 +138,9 @@ namespace GoHunter.Data.Migrations
                         .HasColumnType("varchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId")
+                        .IsUnique();
 
                     b.ToTable("Employees");
                 });
@@ -281,16 +281,19 @@ namespace GoHunter.Data.Migrations
                     b.ToTable("Techs");
                 });
 
-            modelBuilder.Entity("GoHunter.Business.Models.Address", b =>
+            modelBuilder.Entity("GoHunter.Business.Models.Company", b =>
                 {
-                    b.HasOne("GoHunter.Business.Models.Company", "Company")
-                        .WithOne("Address")
-                        .HasForeignKey("GoHunter.Business.Models.Address", "CompanyId")
+                    b.HasOne("GoHunter.Business.Models.Address", "Address")
+                        .WithOne("Company")
+                        .HasForeignKey("GoHunter.Business.Models.Company", "AddressId")
                         .IsRequired();
+                });
 
-                    b.HasOne("GoHunter.Business.Models.Employee", "Employee")
-                        .WithOne("Address")
-                        .HasForeignKey("GoHunter.Business.Models.Address", "EmployeeId")
+            modelBuilder.Entity("GoHunter.Business.Models.Employee", b =>
+                {
+                    b.HasOne("GoHunter.Business.Models.Address", "Address")
+                        .WithOne("Employee")
+                        .HasForeignKey("GoHunter.Business.Models.Employee", "AddressId")
                         .IsRequired();
                 });
 

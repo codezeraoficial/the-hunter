@@ -3,10 +3,29 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GoHunter.Data.Migrations
 {
-    public partial class CREATE_DATABASE_INITIAL : Migration
+    public partial class CREATE_DATABASE : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Addresses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Street = table.Column<string>(type: "varchar(200)", nullable: false),
+                    Number = table.Column<string>(type: "varchar(50)", nullable: false),
+                    Complement = table.Column<string>(type: "varchar(250)", nullable: false),
+                    Cep = table.Column<string>(type: "varchar(8)", nullable: false),
+                    Neighborhood = table.Column<string>(type: "varchar(100)", nullable: false),
+                    City = table.Column<string>(type: "varchar(100)", nullable: false),
+                    Country = table.Column<string>(type: "varchar(50)", nullable: false),
+                    State = table.Column<string>(type: "varchar(50)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
@@ -16,12 +35,19 @@ namespace GoHunter.Data.Migrations
                     Document = table.Column<string>(type: "varchar(20)", nullable: false),
                     Image = table.Column<string>(type: "varchar(100)", nullable: true),
                     Active = table.Column<bool>(nullable: false),
+                    AddressId = table.Column<Guid>(nullable: false),
                     KindPlan = table.Column<int>(nullable: false),
                     KindOfCompany = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Companies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Companies_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -36,11 +62,18 @@ namespace GoHunter.Data.Migrations
                     Age = table.Column<int>(nullable: false),
                     BirthDate = table.Column<DateTime>(nullable: false),
                     KindPlan = table.Column<int>(nullable: false),
+                    AddressId = table.Column<Guid>(nullable: false),
                     Active = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Employees", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Employees_Addresses_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "Addresses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,39 +94,6 @@ namespace GoHunter.Data.Migrations
                         name: "FK_JobOffers_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Addresses",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Street = table.Column<string>(type: "varchar(200)", nullable: false),
-                    Number = table.Column<string>(type: "varchar(50)", nullable: false),
-                    Complement = table.Column<string>(type: "varchar(250)", nullable: false),
-                    Cep = table.Column<string>(type: "varchar(8)", nullable: false),
-                    Neighborhood = table.Column<string>(type: "varchar(100)", nullable: false),
-                    City = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Country = table.Column<string>(type: "varchar(50)", nullable: false),
-                    State = table.Column<string>(type: "varchar(50)", nullable: false),
-                    EmployeeId = table.Column<Guid>(nullable: false),
-                    CompanyId = table.Column<Guid>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Addresses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Addresses_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Addresses_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -185,15 +185,15 @@ namespace GoHunter.Data.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_CompanyId",
-                table: "Addresses",
-                column: "CompanyId",
+                name: "IX_Companies_AddressId",
+                table: "Companies",
+                column: "AddressId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Addresses_EmployeeId",
-                table: "Addresses",
-                column: "EmployeeId",
+                name: "IX_Employees_AddressId",
+                table: "Employees",
+                column: "AddressId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
@@ -236,9 +236,6 @@ namespace GoHunter.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Addresses");
-
-            migrationBuilder.DropTable(
                 name: "Occupations");
 
             migrationBuilder.DropTable(
@@ -255,6 +252,9 @@ namespace GoHunter.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Companies");
+
+            migrationBuilder.DropTable(
+                name: "Addresses");
         }
     }
 }
