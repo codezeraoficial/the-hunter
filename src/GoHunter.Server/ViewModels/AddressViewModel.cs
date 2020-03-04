@@ -44,9 +44,6 @@ namespace GoHunter.Server.ViewModels
         [StringLength(50, ErrorMessage = "The field {0} must have between {2} and {1} charactres", MinimumLength = 2)]
         public string State { get; set; }
 
-        public Guid EmployeeId { get; set; }       
-
-        public Guid CompanyId { get; set; }
-        
+          
     }
 }

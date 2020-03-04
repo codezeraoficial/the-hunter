@@ -21,7 +21,7 @@ namespace GoHunter.Server.Configuration
             services.AddScoped<ITechRepository, TechRepository>();
 
             services.AddScoped<INotifier, Notifier>();
-            services.AddScoped<ICompanyService, CompanyrService>();
+            services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
 
 

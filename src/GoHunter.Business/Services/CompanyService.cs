@@ -7,47 +7,58 @@ using System.Linq;
 
 namespace GoHunter.Business.Services
 {
-    public class CompanyrService : BaseService, ICompanyService
+    public class CompanyService : BaseService, ICompanyService
     {
 
         private readonly ICompanyRepository _companyRepository;
         private readonly IAddressRepository _addressRepository;
 
-        public CompanyrService(ICompanyRepository companyRepository, IAddressRepository addressRepository, INotifier notifier) : base(notifier)
+        public CompanyService(ICompanyRepository companyRepository, IAddressRepository addressRepository, INotifier notifier) : base(notifier)
         {
             _companyRepository = companyRepository;
             _addressRepository = addressRepository;
         }
 
-        public async Task<bool> Add(Company company)
+        public async Task<Company> Add(Company company)
         {
-            if (!ExecuteValidation(new CompanyValidation(), company)
-               || !ExecuteValidation(new AddressValidation(), company.Address)) return false;
+            company.Id = Guid.NewGuid();
+            company.AddressId = Guid.NewGuid();
+            company.Address.Id = company.AddressId;
 
-            if (_companyRepository.Get(c => c.Document == company.Document).Result.Any())
+            if (!ExecuteValidation(new CompanyValidation(), company)) return null;
+
+            var companies = await _companyRepository.Get(c => c.Document == company.Document);
+            if (companies.Any())
             {
                 Notify("There is already a company with the document informed.");
 
-                return false;
+                return null;
             }
-
-            await _companyRepository.Add(company);
-            return true;
+            try
+            {
+                await _companyRepository.Add(company);
+            }
+            catch (Exception ex)
+            {
+                Notify(ex.Message);
+                return null;
+            }
+            return company;
         }
 
-        public async Task<bool> Update(Company company)
+        public async Task<Company> Update(Company company)
         {
-            if (!ExecuteValidation(new CompanyValidation(), company)) return false;
+            if (!ExecuteValidation(new CompanyValidation(), company)) return null;
 
             if (_companyRepository.Get(c => c.Document == company.Document && c.Id != company.Id).Result.Any())
             {
                 Notify("Company does not exists.");
 
-                return false;
+                return null;
             }
 
             await _companyRepository.Update(company);
-            return true;
+            return null;
         }
 
         public async Task UpdateAddress(Address address)
@@ -67,20 +78,14 @@ namespace GoHunter.Business.Services
 
             var address = await _addressRepository.GetAddressByCompany(id);
 
-            if(address != null)
+            if (address != null)
             {
                 await _addressRepository.Delete(address.Id);
             }
 
             await _companyRepository.Delete(id);
-            return true;
-        }
+            return false;
 
-        public void Dispose()
-        {
-            _addressRepository?.Dispose();
-            _companyRepository?.Dispose();
         }
-
     }
 }

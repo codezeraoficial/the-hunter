@@ -6,8 +6,8 @@ namespace GoHunter.Business.Interfaces
 {
     public interface ICompanyService
     {
-        Task<bool> Add(Company company);
-        Task<bool> Update(Company company);
+        Task<Company> Add(Company company);
+        Task<Company> Update(Company company);
         Task<bool> Delete(Guid Id);
 
         Task UpdateAddress(Address address);

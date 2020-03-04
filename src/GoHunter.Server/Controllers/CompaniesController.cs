@@ -35,7 +35,6 @@ namespace GoHunter.Server.Controllers
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<CompanyViewModel>> GetById(Guid Id)
         {
-
             var company = await GetCompanyJobberOffersAddress(Id);
 
             if (company == null) return NotFound();
@@ -49,11 +48,10 @@ namespace GoHunter.Server.Controllers
             if (!ModelState.IsValid) return BadRequest();
 
             var company = _mapper.Map<Company>(companyViewModel);
-            var result = await _companyService.Add(company);
 
-            if (!result) return BadRequest();
+            var result = _mapper.Map<CompanyViewModel>(await _companyService.Add(company));   
 
-            return Ok(company);
+            return Ok(result);
 
         }
 
@@ -67,7 +65,7 @@ namespace GoHunter.Server.Controllers
             var company = _mapper.Map<Company>(companyViewModel);
             var result = await _companyService.Update(company);
 
-            if (!result) return BadRequest();
+            if (result != null) return BadRequest();
 
             return Ok(company);
         }
@@ -81,7 +79,7 @@ namespace GoHunter.Server.Controllers
 
             var result = await _companyService.Delete(Id);
 
-            if (!result) return BadRequest();
+            if (result != null) return BadRequest();
 
             return Ok(company);
         }
