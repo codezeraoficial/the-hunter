@@ -13,7 +13,7 @@ namespace GoHunter.Business.Models
         public DateTime BirthDate { get; set; }        
         public KindPlan KindPlan { get; set; }            
         public Address Address { get; set; }
-        public Guid AddressId { get; set; }
+        public Guid? AddressId { get; set; }
         public bool Active { get; set; }
 
         public IEnumerable<Tech> Techs { get; set; }

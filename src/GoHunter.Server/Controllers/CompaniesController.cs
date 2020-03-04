@@ -49,7 +49,9 @@ namespace GoHunter.Server.Controllers
 
             var company = _mapper.Map<Company>(companyViewModel);
 
-            var result = _mapper.Map<CompanyViewModel>(await _companyService.Add(company));   
+            var result = _mapper.Map<CompanyViewModel>(await _companyService.Add(company));
+
+            if (result == null) return BadRequest();
 
             return Ok(result);
 
@@ -60,14 +62,14 @@ namespace GoHunter.Server.Controllers
         {
             if (Id != companyViewModel.Id) return BadRequest();
 
-            if (ModelState.IsValid) return BadRequest();
+            if (!ModelState.IsValid) return BadRequest();
 
             var company = _mapper.Map<Company>(companyViewModel);
-            var result = await _companyService.Update(company);
+            var result = _mapper.Map<CompanyViewModel>(await _companyService.Update(company));
 
-            if (result != null) return BadRequest();
+            if (result == null) return BadRequest();
 
-            return Ok(company);
+            return Ok(result);
         }
 
         [HttpDelete("{id:guid}")]
@@ -77,9 +79,7 @@ namespace GoHunter.Server.Controllers
 
             if (company == null) return NotFound();
 
-            var result = await _companyService.Delete(Id);
-
-            if (result != null) return BadRequest();
+            await _companyService.Delete(Id);
 
             return Ok(company);
         }

@@ -23,7 +23,7 @@ namespace GoHunter.Business.Services
         {
             company.Id = Guid.NewGuid();
             company.AddressId = Guid.NewGuid();
-            company.Address.Id = company.AddressId;
+            company.Address.Id = company.AddressId.Value;
 
             if (!ExecuteValidation(new CompanyValidation(), company)) return null;
 
@@ -34,15 +34,9 @@ namespace GoHunter.Business.Services
 
                 return null;
             }
-            try
-            {
-                await _companyRepository.Add(company);
-            }
-            catch (Exception ex)
-            {
-                Notify(ex.Message);
-                return null;
-            }
+
+            await _companyRepository.Add(company);
+
             return company;
         }
 
@@ -50,7 +44,7 @@ namespace GoHunter.Business.Services
         {
             if (!ExecuteValidation(new CompanyValidation(), company)) return null;
 
-            if (_companyRepository.Get(c => c.Document == company.Document && c.Id != company.Id).Result.Any())
+            if (_companyRepository.Get(c => c.Document != company.Document || c.Id != company.Id).Result.Any())
             {
                 Notify("Company does not exists.");
 
@@ -58,7 +52,8 @@ namespace GoHunter.Business.Services
             }
 
             await _companyRepository.Update(company);
-            return null;
+
+            return company;
         }
 
         public async Task UpdateAddress(Address address)
@@ -78,13 +73,14 @@ namespace GoHunter.Business.Services
 
             var address = await _addressRepository.GetAddressByCompany(id);
 
+            await _companyRepository.Delete(id);
+
             if (address != null)
             {
                 await _addressRepository.Delete(address.Id);
             }
 
-            await _companyRepository.Delete(id);
-            return false;
+            return true;
 
         }
 

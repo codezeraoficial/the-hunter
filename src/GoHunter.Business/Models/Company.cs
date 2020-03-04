@@ -11,7 +11,7 @@ namespace GoHunter.Business.Models
         public bool Active { get; set; }
 
         public Address Address { get; set; }
-        public Guid AddressId { get; set; }
+        public Guid? AddressId { get; set; }
 
         public KindPlan KindPlan { get; set; }
         public KindOfCompany KindOfCompany { get; set; }
