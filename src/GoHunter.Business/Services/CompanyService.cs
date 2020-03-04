@@ -87,5 +87,11 @@ namespace GoHunter.Business.Services
             return false;
 
         }
+
+        public void Dispose()
+        {
+            _addressRepository?.Dispose();
+            _companyRepository?.Dispose();
+        }
     }
 }
