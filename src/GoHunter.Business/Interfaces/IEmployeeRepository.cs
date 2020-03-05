@@ -7,6 +7,6 @@ namespace GoHunter.Business.Interfaces
     public interface IEmployeeRepository: IRepository<Employee>
     {
         Task<Employee> GetEmployeeAddress(Guid id);
-        Task<Employee> GetEmployeeTechsSkillsOccupations(Guid id);
+        Task<Employee> GetEmployeeAddressTechsSkillsOccupations(Guid id);
     }
 }

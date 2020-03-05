@@ -25,7 +25,8 @@ namespace GoHunter.Business.Services
             company.AddressId = Guid.NewGuid();
             company.Address.Id = company.AddressId.Value;
 
-            if (!ExecuteValidation(new CompanyValidation(), company)) return null;
+            if (!ExecuteValidation(new CompanyValidation(), company)
+                || !ExecuteValidation(new AddressValidation(), company.Address)) return null;
 
             var companies = await _companyRepository.Get(c => c.Document == company.Document);
             if (companies.Any())

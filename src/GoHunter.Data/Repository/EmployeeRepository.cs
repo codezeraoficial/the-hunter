@@ -19,13 +19,14 @@ namespace GoHunter.Data.Repository
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<Employee> GetEmployeeTechsSkillsOccupations(Guid id)
+        public async Task<Employee> GetEmployeeAddressTechsSkillsOccupations(Guid id)
         {
             return await jobberDbContext.Employees
                 .AsNoTracking()
                 .Include(e => e.Techs)
                 .Include(e => e.Skills)
                 .Include(e => e.Occupations)
+                .Include(e=> e.Address)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
     }

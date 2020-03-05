@@ -6,9 +6,9 @@ namespace GoHunter.Business.Interfaces
 {
     public interface IEmployeeService
     {
-        Task Add(Employee employee);
-        Task Update(Employee employee);
-        Task Delete(Guid Id);
+        Task<Employee> Add(Employee employee);
+        Task<Employee> Update(Employee employee);
+        Task<bool> Delete(Guid Id);
 
         Task UpdateAddress(Address address);
     }

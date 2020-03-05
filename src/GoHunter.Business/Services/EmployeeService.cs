@@ -18,34 +18,40 @@ namespace GoHunter.Business.Services
             _employeeRepository = employeeRepository;
         }
 
-        public async Task Add(Employee employee)
+        public async Task<Employee> Add(Employee employee)
         {
+            employee.Id = Guid.NewGuid();
+            employee.AddressId = Guid.NewGuid();
+            employee.Address.Id = employee.AddressId.Value;
+
             if (!ExecuteValidation(new EmployeeValidation(), employee)
-                || !ExecuteValidation(new AddressValidation(), employee.Address)) return;
+                || !ExecuteValidation(new AddressValidation(), employee.Address)) return null;
 
             if (_employeeRepository.Get(e=> e.Document == employee.Document).Result.Any())
             {
                 Notify("There is already a employee with the document informed.");
 
-                return;
+                return null;
             }
 
             await _employeeRepository.Add(employee);
+            return employee;
 
         }
 
-        public async Task Update(Employee employee)
+        public async Task<Employee> Update(Employee employee)
         {
-            if (!ExecuteValidation(new EmployeeValidation(), employee)) return;
+            if (!ExecuteValidation(new EmployeeValidation(), employee)) return null;
 
             if (_employeeRepository.Get(e=>e.Document == employee.Document && e.Id != employee.Id).Result.Any())
             {
                 Notify("Employee does not exists.");
 
-                return;
+                return null;
             }
 
             await _employeeRepository.Update(employee);
+            return employee;
         }
 
         public async Task UpdateAddress(Address address)
@@ -55,9 +61,24 @@ namespace GoHunter.Business.Services
             await _addressRepository.Update(address);
         }
 
-        public Task Delete(Guid id)
-        {
-            throw new NotImplementedException();
+        public async Task<bool> Delete(Guid id)
+        {  
+            if (id == null)
+            {
+                Notify("Employee does not exists.");
+                return false;
+            }
+
+            var address = await _addressRepository.GetAddressByEmployee(id);
+
+            await _employeeRepository.Delete(id);
+
+            if (address != null)
+            {
+                await _addressRepository.Delete(address.Id);
+            }
+
+            return true;
         }
 
         public void Dispose()
