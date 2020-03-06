@@ -12,7 +12,7 @@ namespace GoHunter.Server.AutoMapper
             CreateMap<Employee, EmployeeViewModel>().ReverseMap();
             CreateMap<Address, AddressViewModel>().ReverseMap();
             CreateMap<JobOffer, JobOfferViewModel>().ReverseMap();
-            CreateMap<OccupationViewModel, OccupationViewModel>().ReverseMap();
+            CreateMap<Occupation, OccupationViewModel>().ReverseMap();
             CreateMap<Skill, SkillViewModel>().ReverseMap();
             CreateMap<Tech, TechViewModel>().ReverseMap();     
 

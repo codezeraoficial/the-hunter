@@ -10,5 +10,6 @@ namespace GoHunter.Business.Interfaces
         Task<IEnumerable<JobOffer>> GetJobOffersByCompany(Guid companyId);
         Task<IEnumerable<JobOffer>> GetJobOffersCompanies();
         Task<JobOffer> GetJobOfferCompany(Guid id);
+        Task<JobOffer> GetJobOfferCompanyOccupation(Guid id);
     }
 }

@@ -4,8 +4,6 @@
     {
         Basic = 1,
         Plus = 2,
-        Premium = 3      
-          
-      
+        Premium = 3
     }
 }

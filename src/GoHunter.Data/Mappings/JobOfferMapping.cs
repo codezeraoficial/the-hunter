@@ -16,7 +16,11 @@ namespace GoHunter.Data.Mappings
 
             builder.Property(c => c.Description)
                  .IsRequired()
-                 .HasColumnType("varchar(1000)");
+                 .HasColumnType("varchar(1000)");        
+            
+            builder.Property(c => c.ContractCode)
+                 .IsRequired()
+                 .HasColumnType("varchar(50)");
 
             builder.Property(c => c.Long)
                  .IsRequired();      

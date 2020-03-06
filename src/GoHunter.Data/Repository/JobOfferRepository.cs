@@ -33,5 +33,14 @@ namespace GoHunter.Data.Repository
                 .Include(j => j.Company)
                 .OrderBy(j => j.Name).ToListAsync();
         }
+
+        public async Task<JobOffer> GetJobOfferCompanyOccupation(Guid id)
+        {
+            return await jobberDbContext.JobOffers
+              .AsNoTracking()
+              .Include(c => c.Occupation)
+              .Include(c => c.Company)
+              .FirstOrDefaultAsync(c => c.Id == id);
+        }
     }
 }

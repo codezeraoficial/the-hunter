@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GoHunter.Business.Models
+﻿namespace GoHunter.Business.Models
 {
     public enum KindOfCompany
     {

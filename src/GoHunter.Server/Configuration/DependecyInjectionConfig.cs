@@ -23,6 +23,7 @@ namespace GoHunter.Server.Configuration
             services.AddScoped<INotifier, Notifier>();
             services.AddScoped<ICompanyService, CompanyService>();
             services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IJobOfferService, JobOfferService>();
 
 
             return services;
