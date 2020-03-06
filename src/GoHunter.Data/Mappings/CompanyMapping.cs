@@ -24,8 +24,7 @@ namespace GoHunter.Data.Mappings
                 .WithOne(a => a.Company);
 
             builder.HasMany(e => e.JobOffers)
-                .WithOne(s => s.Company)
-                .HasForeignKey(e => e.CompanyId);
+                .WithOne();               
 
             builder.ToTable("Companies");
         }

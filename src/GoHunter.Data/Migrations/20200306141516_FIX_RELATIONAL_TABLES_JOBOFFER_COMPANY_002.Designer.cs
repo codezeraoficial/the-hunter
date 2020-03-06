@@ -4,14 +4,16 @@ using GoHunter.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GoHunter.Data.Migrations
 {
     [DbContext(typeof(GoHunterDbContext))]
-    partial class GoHunterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200306141516_FIX_RELATIONAL_TABLES_JOBOFFER_COMPANY_002")]
+    partial class FIX_RELATIONAL_TABLES_JOBOFFER_COMPANY_002
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,8 +156,8 @@ namespace GoHunter.Data.Migrations
                     b.Property<Guid>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CompanyName")
-                        .HasColumnType("varchar(100)");
+                    b.Property<Guid>("CompanyName")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ContractCode")
                         .IsRequired()
@@ -175,13 +177,15 @@ namespace GoHunter.Data.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
-                    b.Property<string>("Occupation")
-                        .IsRequired()
-                        .HasColumnType("varchar(100)");
+                    b.Property<Guid>("OccupationId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("OccupationId")
+                        .IsUnique();
 
                     b.ToTable("JobOffers");
                 });
@@ -305,6 +309,11 @@ namespace GoHunter.Data.Migrations
                     b.HasOne("GoHunter.Business.Models.Company", null)
                         .WithMany("JobOffers")
                         .HasForeignKey("CompanyId")
+                        .IsRequired();
+
+                    b.HasOne("GoHunter.Business.Models.Occupation", "Occupation")
+                        .WithOne("JobOffer")
+                        .HasForeignKey("GoHunter.Business.Models.JobOffer", "OccupationId")
                         .IsRequired();
                 });
 

@@ -25,7 +25,7 @@ namespace GoHunter.Server.ViewModels
 
         public int KindOccupation { get; set; }
 
-        public OccupationViewModel Occupation { get; set; }
+        public string Occupation { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")]    
         public Guid CompanyId { get; set; }

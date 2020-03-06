@@ -45,7 +45,7 @@ namespace GoHunter.Business.Services
         {
             if (!ExecuteValidation(new CompanyValidation(), company)) return null;
 
-            if (_companyRepository.Get(c => c.Document != company.Document || c.Id != company.Id).Result.Any())
+            if (_companyRepository.Get(c => c.Document == company.Document || c.Id != company.Id).Result.Any())
             {
                 Notify("Company does not exists.");
 

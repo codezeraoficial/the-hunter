@@ -24,11 +24,11 @@ namespace GoHunter.Data.Mappings
 
             builder.Property(c => c.Long)
                  .IsRequired();      
-                 
-                 
-            builder.HasOne(e => e.Occupation)
-                .WithOne(a => a.JobOffer);     
-                 
+                                  
+            builder.Property(e => e.Occupation)
+                 .IsRequired()
+                 .HasColumnType("varchar(100)");
+
             builder.HasMany(e => e.Techs)
                 .WithOne(t => t.JobOffer)
                 .HasForeignKey(e => e.JobOfferId);

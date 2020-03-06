@@ -13,8 +13,5 @@ namespace GoHunter.Business.Models
 
         public Guid EmployeeId { get; set; }
         public Employee Employee { get; set; }
-
-        public JobOffer JobOffer { get; set; }
-
     }
 }

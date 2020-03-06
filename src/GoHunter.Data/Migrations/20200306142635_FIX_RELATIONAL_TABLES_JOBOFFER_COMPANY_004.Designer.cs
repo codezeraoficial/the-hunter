@@ -4,14 +4,16 @@ using GoHunter.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GoHunter.Data.Migrations
 {
     [DbContext(typeof(GoHunterDbContext))]
-    partial class GoHunterDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200306142635_FIX_RELATIONAL_TABLES_JOBOFFER_COMPANY_004")]
+    partial class FIX_RELATIONAL_TABLES_JOBOFFER_COMPANY_004
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -206,6 +208,9 @@ namespace GoHunter.Data.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("JobOfferId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
@@ -216,6 +221,8 @@ namespace GoHunter.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("EmployeeId");
+
+                    b.HasIndex("JobOfferId");
 
                     b.ToTable("Occupations");
                 });
@@ -314,6 +321,10 @@ namespace GoHunter.Data.Migrations
                         .WithMany("Occupations")
                         .HasForeignKey("EmployeeId")
                         .IsRequired();
+
+                    b.HasOne("GoHunter.Business.Models.JobOffer", "JobOffer")
+                        .WithMany()
+                        .HasForeignKey("JobOfferId");
                 });
 
             modelBuilder.Entity("GoHunter.Business.Models.Skill", b =>

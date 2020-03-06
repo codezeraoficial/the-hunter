@@ -11,26 +11,33 @@ namespace GoHunter.Business.Services
     {
         private readonly IJobOfferRepository _jobOfferRepository;
         private readonly IOccupationRepository _occupationRepository;
+        private readonly ICompanyRepository _companyrepository;
 
-        public JobOfferService(IJobOfferRepository jobOfferRepository, IOccupationRepository occupationRepository, INotifier notifier): base(notifier)
+        public JobOfferService(IJobOfferRepository jobOfferRepository, 
+                               IOccupationRepository occupationRepository, 
+                               INotifier notifier, 
+                               ICompanyRepository companyRepository) : base(notifier)
         {
             _jobOfferRepository = jobOfferRepository;
             _occupationRepository = occupationRepository;
+            _companyrepository = companyRepository;
         }
 
         public async Task<JobOffer> Add(JobOffer jobOffer)
         {
             jobOffer.Id = Guid.NewGuid();
-            jobOffer.OccupationId = Guid.NewGuid();
-            jobOffer.Occupation.Id = jobOffer.OccupationId;
 
-            if (!ExecuteValidation(new JobOfferValidation(), jobOffer)
-                || !ExecuteValidation(new OccupationValidation(), jobOffer.Occupation)) return null;
+            if (!ExecuteValidation(new JobOfferValidation(), jobOffer)) return null;
 
             if (_jobOfferRepository.Get(j=> j.ContractCode == jobOffer.ContractCode).Result.Any())
             {
                 Notify("There is already a jobber offer with the contract code informed.");
+                return null;
+            }
 
+            if (!_companyrepository.Get(j=> j.Id == jobOffer.CompanyId).Result.Any())
+            {
+                Notify("The company does not exists.");
                 return null;
             }
 
@@ -68,16 +75,10 @@ namespace GoHunter.Business.Services
                 Notify("Job offer does not exists.");
                 return false;
             }
-
-            var occupation = await _occupationRepository.GetOccupationJoboffer(id);
-
+            
             await _jobOfferRepository.Delete(id);
 
-            if (occupation != null)
-            {
-                await _occupationRepository.Delete(occupation.Id);
-            }
-
+     
             return true;
         }
 

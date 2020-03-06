@@ -17,13 +17,7 @@ namespace GoHunter.Data.Repository
         {
             return await jobberDbContext.Occupations.AsNoTracking().Include(o => o.Employee)
                 .FirstOrDefaultAsync(o => o.Id == id);
-        }
-
-        public async Task<Occupation> GetOccupationJoboffer(Guid id)
-        {
-            return await jobberDbContext.Occupations.AsNoTracking().Include(o => o.JobOffer)
-               .FirstOrDefaultAsync(o => o.Id == id);
-        }
+        }  
 
         public async Task<IEnumerable<Occupation>> GetOccupationsByEmployee(Guid employeeId)
         {
@@ -39,11 +33,6 @@ namespace GoHunter.Data.Repository
         {
             return await jobberDbContext.Occupations.AsNoTracking().Include(o => o.Employee)
                .OrderBy(o => o.Name).ToListAsync();
-        }
-        public async Task<IEnumerable<Occupation>> GetOccupationsJobOffers()
-        {
-            return await jobberDbContext.Occupations.AsNoTracking().Include(o => o.JobOffer)
-               .OrderBy(o => o.Name).ToListAsync();
-        }
+        } 
     }
 }
