@@ -41,7 +41,7 @@ namespace Api.Controllers
             if (!ModelState.IsValid) 
                 return BadRequest();
 
-            var result = _mapper.Map<CompanyViewModel>(await _companyService.Add(companyViewModel));
+            var result = await _companyService.Add(companyViewModel);
 
             if (result == null) 
                 return BadRequest();
