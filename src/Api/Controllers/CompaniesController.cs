@@ -38,7 +38,7 @@ namespace Api.Controllers
             return CustomResponse(await _companyService.Add(companyViewModel));
         }
 
-        [HttpPut("{id:guid}")]
+        [HttpPut]
         public async Task<ActionResult<CompanyViewModel>> Update(CompanyViewModel companyViewModel)
         {
             if (!ModelState.IsValid) return CustomResponse(ModelState);

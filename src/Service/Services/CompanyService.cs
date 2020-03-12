@@ -46,8 +46,12 @@ namespace Service.Services
             if (!ExecuteValidation(new CompanyValidation(), company)
                 || !ExecuteValidation(new AddressValidation(), company.Address)) return null;
 
-            var companies = await _companyRepository.Get(c => c.Document == company.Document);
-            if (companies.Any())
+            var companies = _companyRepository
+                .Get()
+                .WithDocument(company.Document)
+                .FirstOrDefault();
+
+            if (companies != null)
             {
                 Notify("There is already a company with the document informed.");
 
@@ -56,7 +60,7 @@ namespace Service.Services
 
             await _companyRepository.Add(company);
 
-            return _mapper.Map<CompanyViewModel>(company); ;
+            return _mapper.Map<CompanyViewModel>(company);
         }
 
         public async Task<CompanyViewModel> Update(CompanyViewModel companyViewModel)
@@ -66,7 +70,13 @@ namespace Service.Services
             if (!ExecuteValidation(new CompanyValidation(), company)) 
                 return null;
 
-            if (_companyRepository.Get(c => c.Document == company.Document || c.Id != company.Id).Result.Any())
+            var companies = _companyRepository
+                .Get()
+                .WithId(company.Id)
+                .WithDocument(company.Document)
+                .FirstOrDefault();
+
+            if (companies == null)
             {
                 Notify("Company does not exists.");
 
@@ -75,7 +85,7 @@ namespace Service.Services
 
             await _companyRepository.Update(company);
 
-            return companyViewModel;
+            return _mapper.Map<CompanyViewModel>(company);
         }
 
         public async Task UpdateAddress(Address address)
