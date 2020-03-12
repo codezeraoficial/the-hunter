@@ -17,7 +17,7 @@ namespace Api.Controllers
         private readonly IEmployeeService _employeeService;
         private readonly IMapper _mapper;
 
-        public EmployeesController(IEmployeeRepository employeeRepository, IMapper mapper, IEmployeeService employeeService)
+        public EmployeesController(IEmployeeRepository employeeRepository, IMapper mapper, IEmployeeService employeeService, INotifier notifier) : base(notifier)
         {
             _employeeRepository = employeeRepository;
             _employeeService = employeeService;

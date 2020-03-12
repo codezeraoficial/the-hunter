@@ -17,7 +17,7 @@ namespace Api.Controllers
         private readonly IJobOfferService _jobOfferService;
         private readonly IMapper _mapper;
 
-        public JobOffersController(IJobOfferRepository jobOfferRepository, IJobOfferService jobOfferService, IMapper mapper)
+        public JobOffersController(IJobOfferRepository jobOfferRepository, IJobOfferService jobOfferService, IMapper mapper, INotifier notifier) : base(notifier)
         {
             _jobOfferRepository = jobOfferRepository;
             _jobOfferService = jobOfferService;

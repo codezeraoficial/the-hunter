@@ -27,6 +27,12 @@ namespace Api
             services.AddDbContext<GoHunterDbContext>(options
               => options.UseSqlServer(Configuration.GetConnectionString("GoHunterConnection")));
 
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             services.AddAutoMapper(typeof(Startup));
 
             services.ResolveDependecies();
