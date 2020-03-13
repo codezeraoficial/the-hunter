@@ -12,13 +12,9 @@ namespace Repository.Mappings
         {
             builder.HasKey(e => e.Id);
 
-            builder.Property(e => e.FirstName)
+            builder.Property(e => e.Name)
                  .IsRequired()
-                 .HasColumnType("varchar(50)");
-
-            builder.Property(e => e.LastName)
-                 .IsRequired()
-                 .HasColumnType("varchar(100)");            
+                 .HasColumnType("varchar(50)");     
 
             builder.Property(e => e.Document)
                 .IsRequired()
