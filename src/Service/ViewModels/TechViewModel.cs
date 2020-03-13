@@ -17,9 +17,9 @@ namespace Service.ViewModels
 
         public string Level { get; set; }
 
-        public Guid EmployeeId { get; set; }    
+        public Guid? EmployeeId { get; set; }    
 
-        public Guid JobOfferId { get; set; }
+        public Guid? JobOfferId { get; set; }
         
     }
 }

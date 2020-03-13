@@ -26,6 +26,7 @@ namespace Api.Configuration
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IJobOfferService, JobOfferService>();
             services.AddScoped<IOccupationService, OccupationService>();
+            services.AddScoped<ITechService, TechService>();
 
 
             return services;
