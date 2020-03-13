@@ -5,6 +5,9 @@ using Domain.Models.Validations;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using System.Collections.Generic;
+using Service.ViewModels;
 
 namespace Service.Services
 {
@@ -12,15 +15,29 @@ namespace Service.Services
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IAddressRepository _addressRepository;
+        private readonly IMapper _mapper;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, IAddressRepository addressRepository, INotifier notifier): base(notifier)
+        public EmployeeService(IEmployeeRepository employeeRepository, IAddressRepository addressRepository, IMapper mapper, INotifier notifier): base(notifier)
         {
             _addressRepository = addressRepository;
             _employeeRepository = employeeRepository;
+            _mapper = mapper;
         }
 
-        public async Task<Employee> Add(Employee employee)
+        public async Task<IEnumerable<EmployeeViewModel>> GetAll()
         {
+            return _mapper.Map<IEnumerable<EmployeeViewModel>>(await _employeeRepository.GetAll());
+        }
+
+        public async Task<EmployeeViewModel> GetById(Guid id)
+        {
+            return _mapper.Map<EmployeeViewModel>(await _employeeRepository.GetEmployeeAddress(id));
+        }
+
+        public async Task<EmployeeViewModel> Add(EmployeeViewModel employeeViewModel)
+        {
+            var employee = _mapper.Map<Employee>(employeeViewModel);
+
             employee.Id = Guid.NewGuid();
             employee.AddressId = Guid.NewGuid();
             employee.Address.Id = employee.AddressId.Value;
@@ -36,15 +53,17 @@ namespace Service.Services
             }
 
             await _employeeRepository.Add(employee);
-            return employee;
+            return _mapper.Map<EmployeeViewModel>(employee);
 
         }
 
-        public async Task<Employee> Update(Employee employee)
+        public async Task<EmployeeViewModel> Update(EmployeeViewModel employeeViewModel)
         {
+            var employee = _mapper.Map<Employee>(employeeViewModel);
+
             if (!ExecuteValidation(new EmployeeValidation(), employee)) return null;
 
-            if (_employeeRepository.Get(e=>e.Document == employee.Document && e.Id != employee.Id).Result.Any())
+            if (!_employeeRepository.Get(e=>e.Id == employee.Id).Result.Any())
             {
                 Notify("Employee does not exists.");
 
@@ -52,7 +71,7 @@ namespace Service.Services
             }
 
             await _employeeRepository.Update(employee);
-            return employee;
+            return _mapper.Map<EmployeeViewModel>(employee);
         }
 
         public async Task UpdateAddress(Address address)
@@ -63,10 +82,11 @@ namespace Service.Services
         }
 
         public async Task<bool> Delete(Guid id)
-        {  
-            if (id == null)
+        {
+            if (!_employeeRepository.Get(e => e.Id == id).Result.Any())
             {
                 Notify("Employee does not exists.");
+
                 return false;
             }
 

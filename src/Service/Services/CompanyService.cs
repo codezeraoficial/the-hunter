@@ -46,12 +46,9 @@ namespace Service.Services
             if (!ExecuteValidation(new CompanyValidation(), company)
                 || !ExecuteValidation(new AddressValidation(), company.Address)) return null;
 
-            var companies = _companyRepository
-                .Get()
-                .WithDocument(company.Document)
-                .FirstOrDefault();
 
-            if (companies != null)
+
+            if (_companyRepository.Get(c => c.Document == company.Document).Result.Any())
             {
                 Notify("There is already a company with the document informed.");
 
@@ -67,16 +64,10 @@ namespace Service.Services
         {
             var company = _mapper.Map<Company>(companyViewModel);
 
-            if (!ExecuteValidation(new CompanyValidation(), company)) 
+            if (!ExecuteValidation(new CompanyValidation(), company))
                 return null;
-
-            var companies = _companyRepository
-                .Get()
-                .WithId(company.Id)
-                .WithDocument(company.Document)
-                .FirstOrDefault();
-
-            if (companies == null)
+                       
+            if (!_companyRepository.Get(c => c.Id == company.Id).Result.Any())
             {
                 Notify("Company does not exists.");
 
@@ -97,6 +88,14 @@ namespace Service.Services
 
         public async Task<bool> Delete(Guid id)
         {
+
+            if (!_companyRepository.Get(c => c.Id == id).Result.Any())
+            {
+                Notify("Company does not exists.");
+
+                return false;
+            }
+
             if (_companyRepository.GetCompanyJobOffersAddress(id).Result.JobOffers.Any())
             {
                 Notify("The company has registered contracts.");

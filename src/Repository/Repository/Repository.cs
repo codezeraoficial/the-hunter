@@ -59,5 +59,10 @@ namespace Repository.Repository
         {
             jobberDbContext?.Dispose();
         }
+
+        public IQueryable<TEntity> Get()
+        {
+            return dbSet.AsNoTracking();
+        }
     }
 }
