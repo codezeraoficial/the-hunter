@@ -26,7 +26,7 @@ namespace Repository.Mappings
                 .IsRequired();
 
             builder.Property(c => c.EndDate)
-               .IsRequired();
+               .IsRequired(false);
 
             builder.ToTable("Occupations");
 

@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using Repository.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
-using Domain.Models;
 using Service.ViewModels;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -15,7 +12,7 @@ namespace Api.Controllers
     {
         private readonly IJobOfferService _jobOfferService;
 
-        public JobOffersController(IJobOfferService jobOfferService, IMapper mapper, INotifier notifier) : base(notifier)
+        public JobOffersController(IJobOfferService jobOfferService, INotifier notifier) : base(notifier)
         {
             _jobOfferService = jobOfferService;
         }

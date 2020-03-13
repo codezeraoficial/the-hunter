@@ -31,7 +31,7 @@ namespace Service.Services
 
         public async Task<EmployeeViewModel> GetById(Guid id)
         {
-            return _mapper.Map<EmployeeViewModel>(await _employeeRepository.GetEmployeeAddress(id));
+            return _mapper.Map<EmployeeViewModel>(await _employeeRepository.GetEmployeeAddressTechsSkillsOccupations(id));
         }
 
         public async Task<EmployeeViewModel> Add(EmployeeViewModel employeeViewModel)
