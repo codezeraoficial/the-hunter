@@ -33,7 +33,5 @@ namespace Service.ViewModels
         [ScaffoldColumn(false)]
         public string CompanyName { get; set; }
 
-        public IEnumerable<TechViewModel> Techs { get; set; }
-        public IEnumerable<SkillViewModel> Skills { get; set; }
     }
 }

@@ -12,15 +12,11 @@ namespace Api.Controllers
     [Route("api/employees")]
     public class EmployeesController : MainController
     {
-        private readonly IEmployeeRepository _employeeRepository;
         private readonly IEmployeeService _employeeService;
-        private readonly IMapper _mapper;
 
-        public EmployeesController(IEmployeeRepository employeeRepository, IMapper mapper, IEmployeeService employeeService, INotifier notifier) : base(notifier)
+        public EmployeesController(IEmployeeService employeeService, INotifier notifier) : base(notifier)
         {
-            _employeeRepository = employeeRepository;
             _employeeService = employeeService;
-            _mapper = mapper;
         }
 
         [HttpGet]
