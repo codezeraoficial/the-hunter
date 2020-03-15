@@ -15,13 +15,13 @@ namespace Repository.Repository
 
         public async Task<Skill> GetSkillEmployee(Guid id)
         {
-            return await jobberDbContext.Skills.AsNoTracking().Include(s => s.Employee)
+            return await goHunterContext.Skills.AsNoTracking().Include(s => s.Employee)
               .FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public async Task<Skill> GetSkillJoboffer(Guid id)
         {
-            return await jobberDbContext.Skills.AsNoTracking().Include(s => s.JobOffer)
+            return await goHunterContext.Skills.AsNoTracking().Include(s => s.JobOffer)
              .FirstOrDefaultAsync(s => s.Id == id);
         }
 
@@ -37,13 +37,13 @@ namespace Repository.Repository
 
         public async Task<IEnumerable<Skill>> GetSkillsEmployees()
         {
-            return await jobberDbContext.Skills.AsNoTracking().Include(s => s.Employee)
+            return await goHunterContext.Skills.AsNoTracking().Include(s => s.Employee)
              .OrderBy(s => s.Name).ToListAsync();
         }
 
         public async Task<IEnumerable<Skill>> GetSkillsJobOffers()
         {
-            return await jobberDbContext.Skills.AsNoTracking().Include(s => s.JobOffer)
+            return await goHunterContext.Skills.AsNoTracking().Include(s => s.JobOffer)
                .OrderBy(s => s.Name).ToListAsync();
         }
     }

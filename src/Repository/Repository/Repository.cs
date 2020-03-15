@@ -12,12 +12,12 @@ namespace Repository.Repository
 {
     public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity, new()
     {
-        protected readonly GoHunterDbContext jobberDbContext;
+        protected readonly GoHunterDbContext goHunterContext;
         protected readonly DbSet<TEntity> dbSet;
 
         public Repository(GoHunterDbContext db)
         {
-            jobberDbContext = db;
+            goHunterContext = db;
             dbSet = db.Set<TEntity>();
         }
 
@@ -52,12 +52,12 @@ namespace Repository.Repository
 
         public async Task<int> SaveChanges()
         {
-            return await jobberDbContext.SaveChangesAsync();
+            return await goHunterContext.SaveChangesAsync();
         }
      
         public void Dispose()
         {
-            jobberDbContext?.Dispose();
+            goHunterContext?.Dispose();
         }
 
         public IQueryable<TEntity> Get()

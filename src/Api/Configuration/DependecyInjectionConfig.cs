@@ -20,6 +20,7 @@ namespace Api.Configuration
             services.AddScoped<IOccupationRepository, OccupationRepository>();
             services.AddScoped<ISkillRepository, SkillRepository>();
             services.AddScoped<ITechRepository, TechRepository>();
+            services.AddScoped<IUserCombineRepository, UserCombineRepository>();
 
             services.AddScoped<INotifier, Notifier>();
             services.AddScoped<ICompanyService, CompanyService>();
@@ -27,6 +28,7 @@ namespace Api.Configuration
             services.AddScoped<IJobOfferService, JobOfferService>();
             services.AddScoped<IOccupationService, OccupationService>();
             services.AddScoped<ITechService, TechService>();
+            services.AddScoped<IUserCombineService, UserCombineService>();
 
 
             return services;

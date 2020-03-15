@@ -13,7 +13,7 @@ namespace Repository.Repository
 
         public async Task<Company> GetCompanyAddress(Guid id)
         {
-            return await jobberDbContext.Companies
+            return await goHunterContext.Companies
               .AsNoTracking()
               .Include(c => c.Address)
               .FirstOrDefaultAsync(c => c.Id == id);
@@ -21,7 +21,7 @@ namespace Repository.Repository
 
         public async Task<Company> GetCompanyJobOffersAddress(Guid id)
         {
-            return await jobberDbContext.Companies
+            return await goHunterContext.Companies
               .AsNoTracking()
               .Include(c=> c.JobOffers)
               .Include(c => c.Address)              

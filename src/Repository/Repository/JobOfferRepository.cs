@@ -15,7 +15,7 @@ namespace Repository.Repository
 
         public async Task<JobOffer> GetJobOfferCompany(Guid id)
         {
-            return await jobberDbContext.JobOffers
+            return await goHunterContext.JobOffers
                 .AsNoTracking()                
                 .FirstOrDefaultAsync(j => j.Id == id);
         }
@@ -27,14 +27,14 @@ namespace Repository.Repository
 
         public async Task<IEnumerable<JobOffer>> GetJobOffersCompanies()
         {
-            return await jobberDbContext.JobOffers
+            return await goHunterContext.JobOffers
                 .AsNoTracking()                
                 .OrderBy(j => j.Name).ToListAsync();
         }
 
         public async Task<JobOffer> GetJobOfferCompanyOccupation(Guid id)
         {
-            return await jobberDbContext.JobOffers
+            return await goHunterContext.JobOffers
               .AsNoTracking()
               .Include(c => c.Occupation)              
               .FirstOrDefaultAsync(c => c.Id == id);

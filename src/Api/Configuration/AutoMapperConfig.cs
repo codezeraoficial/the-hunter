@@ -15,6 +15,7 @@ namespace Api.AutoMapper
             CreateMap<Occupation, OccupationViewModel>().ReverseMap();
             CreateMap<Skill, SkillViewModel>().ReverseMap();
             CreateMap<Tech, TechViewModel>().ReverseMap();
+            CreateMap<UserCombine, UserCombineViewModel>().ReverseMap();
         }
     }
 }

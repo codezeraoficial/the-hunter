@@ -15,7 +15,7 @@ namespace Repository.Repository
 
         public async Task<Occupation> GetOccupationEmployee(Guid id)
         {
-            return await jobberDbContext.Occupations.AsNoTracking().Include(o => o.Employee)
+            return await goHunterContext.Occupations.AsNoTracking().Include(o => o.Employee)
                 .FirstOrDefaultAsync(o => o.Id == id);
         }  
 
@@ -31,7 +31,7 @@ namespace Repository.Repository
 
         public async Task<IEnumerable<Occupation>> GetOccupationsEmployees()
         {
-            return await jobberDbContext.Occupations.AsNoTracking().Include(o => o.Employee)
+            return await goHunterContext.Occupations.AsNoTracking().Include(o => o.Employee)
                .OrderBy(o => o.Name).ToListAsync();
         } 
     }

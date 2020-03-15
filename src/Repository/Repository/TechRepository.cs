@@ -15,24 +15,24 @@ namespace Repository.Repository
 
         public async Task<Tech> GetTechEmployee(Guid id)
         {
-            return await jobberDbContext.Techs.AsNoTracking().Include(t => t.Employee)
+            return await goHunterContext.Techs.AsNoTracking().Include(t => t.Employee)
                 .FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task<Tech> GetTechJoboffer(Guid id)
         {
-            return await jobberDbContext.Techs.AsNoTracking().Include(t => t.JobOffer)
+            return await goHunterContext.Techs.AsNoTracking().Include(t => t.JobOffer)
                .FirstOrDefaultAsync(t => t.Id == id);
         }
         public async Task<IEnumerable<Tech>> GetTechsEmployees()
         {
-            return await jobberDbContext.Techs.AsNoTracking().Include(t => t.Employee)
+            return await goHunterContext.Techs.AsNoTracking().Include(t => t.Employee)
                 .OrderBy(t => t.Name).ToListAsync();                
         }
 
         public async Task<IEnumerable<Tech>> GetTechsJobOffers()
         {
-            return await jobberDbContext.Techs.AsNoTracking().Include(t => t.JobOffer)
+            return await goHunterContext.Techs.AsNoTracking().Include(t => t.JobOffer)
                .OrderBy(t => t.Name).ToListAsync();
         }
         public async Task<IEnumerable<Tech>> GetTechsByEmployee(Guid employeeId)

@@ -13,13 +13,13 @@ namespace Repository.Repository
 
         public async Task<Address> GetAddressByCompany(Guid companyId)
         {
-            return await jobberDbContext.Addresses.AsNoTracking()
+            return await goHunterContext.Addresses.AsNoTracking()
                 .FirstOrDefaultAsync(a => a.Company.Id == companyId);
         }
 
         public async Task<Address> GetAddressByEmployee(Guid employeeId)
         {
-            return await jobberDbContext.Addresses.AsNoTracking()
+            return await goHunterContext.Addresses.AsNoTracking()
                .FirstOrDefaultAsync(a => a.Employee.Id == employeeId);
         }
     }
