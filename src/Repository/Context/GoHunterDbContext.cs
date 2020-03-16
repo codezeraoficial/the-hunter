@@ -15,6 +15,7 @@ namespace Repository.Context
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Tech> Techs { get; set; }
         public DbSet<JobOffer> JobOffers { get; set; }
+        public DbSet<UserCombine> UsersCombine { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

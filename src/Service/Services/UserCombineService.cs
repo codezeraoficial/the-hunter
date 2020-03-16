@@ -39,9 +39,20 @@ namespace Service.Services
             return _mapper.Map<UserCombineViewModel>(userCombine);
         }
 
-        public Task<UserCombineViewModel> DropUser(UserCombineViewModel userCombineViewModel)
+        public async Task<UserCombineViewModel> DropUser(UserCombineViewModel userCombineViewModel)
         {
-            throw new NotImplementedException();
+            var userCombine = _mapper.Map<UserCombine>(userCombineViewModel);
+            userCombine.Dropped = DateTime.UtcNow;
+
+            if (!_userCombineRepository.Get(u => u.Id == userCombine.Id).Result.Any())
+            {
+                Notify("Invalid parameters.");
+                return null;
+            }
+
+            await _userCombineRepository.Update(userCombine);
+
+            return _mapper.Map<UserCombineViewModel>(userCombine);
         }
         
         public void Dispose()
