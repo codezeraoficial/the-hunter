@@ -1,22 +1,14 @@
-﻿using System;
+﻿using Domain.Enums;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Models
 {
-    public class Company : Entity
+    public class Company : User
     {
-        public string Name { get; set; }
-        public string Document { get; set; }
-        public string Image { get; set; }
-        public bool Active { get; set; }
+        public string Name { get; private set; }
+        public KindOfCompany KindOfCompany { get; private set; }
 
-        public Address Address { get; set; }
-        public Guid? AddressId { get; set; }
-
-        public KindPlan KindPlan { get; set; }
-        public KindOfCompany KindOfCompany { get; set; }
-
-        public IEnumerable<JobOffer> JobOffers { get; set; }
-
+        public IEnumerable<JobOffer> JobOffers { get; private set; }
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Repository.Migrations
 {
-    public partial class CREATE_DATABASE : Migration
+    public partial class INITIAL_CREATE : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,6 +12,9 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Removed = table.Column<bool>(nullable: false),
+                    CretedAt = table.Column<DateTime>(nullable: false),
+                    LastModifyAt = table.Column<DateTime>(nullable: true),
                     Street = table.Column<string>(type: "varchar(200)", nullable: false),
                     Number = table.Column<string>(type: "varchar(50)", nullable: false),
                     Complement = table.Column<string>(type: "varchar(250)", nullable: false),
@@ -27,16 +30,37 @@ namespace Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "UsersCombine",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Removed = table.Column<bool>(nullable: false),
+                    CretedAt = table.Column<DateTime>(nullable: false),
+                    LastModifyAt = table.Column<DateTime>(nullable: true),
+                    JobOfferId = table.Column<Guid>(nullable: true),
+                    EmployeeId = table.Column<Guid>(nullable: true),
+                    Gotcha = table.Column<DateTime>(nullable: true),
+                    Dropped = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UsersCombine", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(type: "varchar(50)", nullable: false),
+                    Removed = table.Column<bool>(nullable: false),
+                    CretedAt = table.Column<DateTime>(nullable: false),
+                    LastModifyAt = table.Column<DateTime>(nullable: true),
                     Document = table.Column<string>(type: "varchar(20)", nullable: false),
                     Image = table.Column<string>(type: "varchar(100)", nullable: true),
                     Active = table.Column<bool>(nullable: false),
-                    AddressId = table.Column<Guid>(nullable: true),
                     KindPlan = table.Column<int>(nullable: false),
+                    AddressId = table.Column<Guid>(nullable: false),
+                    Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     KindOfCompany = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -55,15 +79,17 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Removed = table.Column<bool>(nullable: false),
+                    CretedAt = table.Column<DateTime>(nullable: false),
+                    LastModifyAt = table.Column<DateTime>(nullable: true),
+                    Document = table.Column<string>(type: "varchar(14)", nullable: false),
+                    Image = table.Column<string>(type: "varchar(100)", nullable: true),
+                    Active = table.Column<bool>(nullable: false),
+                    KindPlan = table.Column<int>(nullable: false),
+                    AddressId = table.Column<Guid>(nullable: false),
                     FirstName = table.Column<string>(type: "varchar(50)", nullable: false),
                     LastName = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Image = table.Column<string>(type: "varchar(100)", nullable: true),
-                    Document = table.Column<string>(type: "varchar(14)", nullable: false),
-                    Age = table.Column<int>(nullable: false),
-                    BirthDate = table.Column<DateTime>(nullable: false),
-                    KindPlan = table.Column<int>(nullable: false),
-                    AddressId = table.Column<Guid>(nullable: true),
-                    Active = table.Column<bool>(nullable: false)
+                    BirthDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -81,10 +107,13 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Removed = table.Column<bool>(nullable: false),
+                    CretedAt = table.Column<DateTime>(nullable: false),
+                    LastModifyAt = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     Description = table.Column<string>(type: "varchar(1000)", nullable: false),
                     ContractCode = table.Column<string>(type: "varchar(50)", nullable: false),
-                    Long = table.Column<int>(nullable: false),
+                    ContractTime = table.Column<int>(nullable: false),
                     KindOccupation = table.Column<int>(nullable: false),
                     Occupation = table.Column<string>(type: "varchar(100)", nullable: false),
                     CompanyId = table.Column<Guid>(nullable: false),
@@ -106,9 +135,12 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Removed = table.Column<bool>(nullable: false),
+                    CretedAt = table.Column<DateTime>(nullable: false),
+                    LastModifyAt = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false),
-                    EndDate = table.Column<DateTime>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: true),
                     CompanyName = table.Column<string>(type: "varchar(50)", nullable: false),
                     Description = table.Column<string>(type: "varchar(1000)", nullable: false),
                     EmployeeId = table.Column<Guid>(nullable: false)
@@ -129,6 +161,9 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Removed = table.Column<bool>(nullable: false),
+                    CretedAt = table.Column<DateTime>(nullable: false),
+                    LastModifyAt = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     Description = table.Column<string>(type: "varchar(1000)", nullable: false),
                     Link = table.Column<string>(type: "varchar(100)", nullable: false),
@@ -157,11 +192,14 @@ namespace Repository.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    Removed = table.Column<bool>(nullable: false),
+                    CretedAt = table.Column<DateTime>(nullable: false),
+                    LastModifyAt = table.Column<DateTime>(nullable: true),
                     Name = table.Column<string>(type: "varchar(50)", nullable: false),
                     Description = table.Column<string>(type: "varchar(1000)", nullable: false),
                     Level = table.Column<string>(type: "varchar(100)", nullable: false),
-                    EmployeeId = table.Column<Guid>(nullable: false),
-                    JobOfferId = table.Column<Guid>(nullable: false)
+                    EmployeeId = table.Column<Guid>(nullable: true),
+                    JobOfferId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -184,15 +222,13 @@ namespace Repository.Migrations
                 name: "IX_Companies_AddressId",
                 table: "Companies",
                 column: "AddressId",
-                unique: true,
-                filter: "[AddressId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_AddressId",
                 table: "Employees",
                 column: "AddressId",
-                unique: true,
-                filter: "[AddressId] IS NOT NULL");
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_JobOffers_CompanyId",
@@ -235,6 +271,9 @@ namespace Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "Techs");
+
+            migrationBuilder.DropTable(
+                name: "UsersCombine");
 
             migrationBuilder.DropTable(
                 name: "Employees");

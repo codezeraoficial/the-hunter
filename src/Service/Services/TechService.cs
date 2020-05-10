@@ -37,7 +37,7 @@ namespace Service.Services
         public async Task<TechViewModel> Add(TechViewModel techViewModel)
         {
             var tech = _mapper.Map<Tech>(techViewModel);
-            tech.Id = new Guid();
+            //tech.Id = new Guid();
 
             if (!ExecuteValidation(new TechValidation(), tech)) return null;
 

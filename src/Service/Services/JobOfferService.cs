@@ -44,7 +44,7 @@ namespace Service.Services
         {
             var jobOffer = _mapper.Map<JobOffer>(jobOfferViewModel);
 
-            jobOffer.Id = Guid.NewGuid();
+            //jobOffer.Id = Guid.NewGuid();
 
             if (!ExecuteValidation(new JobOfferValidation(), jobOffer)) return null;
 

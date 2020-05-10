@@ -23,7 +23,7 @@ namespace Service.Services
         public async Task<UserCombineViewModel> GotchaUser(UserCombineViewModel userCombineViewModel)
         {
             var userCombine = _mapper.Map<UserCombine>(userCombineViewModel);
-            userCombine.Gotcha = DateTime.UtcNow;
+            userCombine.DoGotcha();
 
             if (_userCombineRepository.Get(u => u.Id == userCombine.Id).Result.Any())
             {
@@ -42,7 +42,7 @@ namespace Service.Services
         public async Task<UserCombineViewModel> DropUser(UserCombineViewModel userCombineViewModel)
         {
             var userCombine = _mapper.Map<UserCombine>(userCombineViewModel);
-            userCombine.Dropped = DateTime.UtcNow;
+            userCombine.DoDropped();
 
             if (!_userCombineRepository.Get(u => u.Id == userCombine.Id).Result.Any())
             {

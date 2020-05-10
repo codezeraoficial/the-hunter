@@ -38,9 +38,7 @@ namespace Service.Services
         {
             var employee = _mapper.Map<Employee>(employeeViewModel);
 
-            employee.Id = Guid.NewGuid();
-            employee.AddressId = Guid.NewGuid();
-            employee.Address.Id = employee.AddressId.Value;
+            employee.LinkAddress(employee.AddressId);
 
             if (!ExecuteValidation(new EmployeeValidation(), employee)
                 || !ExecuteValidation(new AddressValidation(), employee.Address)) return null;

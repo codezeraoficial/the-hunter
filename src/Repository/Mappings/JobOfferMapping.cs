@@ -22,7 +22,7 @@ namespace Repository.Mappings
                  .IsRequired()
                  .HasColumnType("varchar(50)");
 
-            builder.Property(c => c.Long)
+            builder.Property(c => c.ContractTime)
                  .IsRequired();      
                                   
             builder.Property(e => e.Occupation)

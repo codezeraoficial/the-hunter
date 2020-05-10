@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,7 +30,7 @@ namespace Service.ViewModels
         [ScaffoldColumn(false)]
         public DateTime BirthDate { get; set; }
 
-        public int KindPlan { get; set; }
+        public KindPlan KindPlan { get; set; }
         public AddressViewModel Address { get; set; }
         public bool Active { get; set; }
 

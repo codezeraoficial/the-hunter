@@ -41,6 +41,12 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<DateTime>("CretedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LastModifyAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Neighborhood")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
@@ -48,6 +54,9 @@ namespace Repository.Migrations
                     b.Property<string>("Number")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
+
+                    b.Property<bool>("Removed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("State")
                         .IsRequired()
@@ -71,8 +80,11 @@ namespace Repository.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("AddressId")
+                    b.Property<Guid>("AddressId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CretedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Document")
                         .IsRequired()
@@ -87,15 +99,20 @@ namespace Repository.Migrations
                     b.Property<int>("KindPlan")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("LastModifyAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<bool>("Removed")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId")
-                        .IsUnique()
-                        .HasFilter("[AddressId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Companies");
                 });
@@ -109,13 +126,13 @@ namespace Repository.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<Guid?>("AddressId")
+                    b.Property<Guid>("AddressId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("BirthDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CretedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Document")
@@ -132,15 +149,20 @@ namespace Repository.Migrations
                     b.Property<int>("KindPlan")
                         .HasColumnType("int");
 
+                    b.Property<DateTime?>("LastModifyAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
 
+                    b.Property<bool>("Removed")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AddressId")
-                        .IsUnique()
-                        .HasFilter("[AddressId] IS NOT NULL");
+                        .IsUnique();
 
                     b.ToTable("Employees");
                 });
@@ -161,6 +183,12 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<int>("ContractTime")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CretedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("varchar(1000)");
@@ -168,8 +196,8 @@ namespace Repository.Migrations
                     b.Property<int>("KindOccupation")
                         .HasColumnType("int");
 
-                    b.Property<int>("Long")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("LastModifyAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -178,6 +206,9 @@ namespace Repository.Migrations
                     b.Property<string>("Occupation")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
+
+                    b.Property<bool>("Removed")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -196,6 +227,9 @@ namespace Repository.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(50)");
 
+                    b.Property<DateTime>("CretedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("varchar(1000)");
@@ -206,9 +240,15 @@ namespace Repository.Migrations
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime?>("LastModifyAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
+
+                    b.Property<bool>("Removed")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
@@ -226,6 +266,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CretedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("varchar(1000)");
@@ -236,6 +279,9 @@ namespace Repository.Migrations
                     b.Property<Guid>("JobOfferId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("LastModifyAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Link")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
@@ -243,6 +289,9 @@ namespace Repository.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
+
+                    b.Property<bool>("Removed")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -259,6 +308,9 @@ namespace Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CretedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("varchar(1000)");
@@ -269,6 +321,9 @@ namespace Repository.Migrations
                     b.Property<Guid?>("JobOfferId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime?>("LastModifyAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Level")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
@@ -276,6 +331,9 @@ namespace Repository.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("varchar(50)");
+
+                    b.Property<bool>("Removed")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -286,18 +344,52 @@ namespace Repository.Migrations
                     b.ToTable("Techs");
                 });
 
+            modelBuilder.Entity("Domain.Models.UserCombine", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CretedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Dropped")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("EmployeeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("Gotcha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("JobOfferId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("LastModifyAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Removed")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UsersCombine");
+                });
+
             modelBuilder.Entity("Domain.Models.Company", b =>
                 {
                     b.HasOne("Domain.Models.Address", "Address")
                         .WithOne("Company")
-                        .HasForeignKey("Domain.Models.Company", "AddressId");
+                        .HasForeignKey("Domain.Models.Company", "AddressId")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Models.Employee", b =>
                 {
                     b.HasOne("Domain.Models.Address", "Address")
                         .WithOne("Employee")
-                        .HasForeignKey("Domain.Models.Employee", "AddressId");
+                        .HasForeignKey("Domain.Models.Employee", "AddressId")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Domain.Models.JobOffer", b =>

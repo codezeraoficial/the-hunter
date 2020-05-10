@@ -46,8 +46,8 @@ namespace Repository.Repository
 
         public virtual async Task Delete(Guid id)
         {
-            dbSet.Remove(new TEntity { Id = id });
-            await SaveChanges();
+            //dbSet.Remove(new TEntity { Id = id });
+            //await SaveChanges();
         }                     
 
         public async Task<int> SaveChanges()

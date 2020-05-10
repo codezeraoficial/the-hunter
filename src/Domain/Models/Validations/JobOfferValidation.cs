@@ -14,7 +14,7 @@ namespace Domain.Models.Validations
              .NotEmpty().WithMessage("The field {PropertyName} must be provided")
              .Length(50, 1000).WithMessage("The field {PropertyName} need to have between {MinLength} and {MaxLength} characteres");
 
-            RuleFor(j => j.Long)
+            RuleFor(j => j.ContractTime)
              .NotEmpty().WithMessage("The field {PropertyName} must be provided");
         }
     }

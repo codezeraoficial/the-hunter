@@ -4,15 +4,15 @@ namespace Domain.Models
 {
     public class Tech : Entity
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Level { get; set; }
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public string Level { get; private set; }
 
-        public Guid? EmployeeId { get; set; }
-        public Employee Employee { get; set; }
+        public Guid? EmployeeId { get; private set; }
+        public Employee Employee { get; private set; }
 
-        public Guid? JobOfferId { get; set; }
-        public JobOffer JobOffer { get; set; }
+        public Guid? JobOfferId { get; private set; }
+        public JobOffer JobOffer { get; private set; }
 
     }
 }

@@ -37,7 +37,7 @@ namespace Service.Services
         public async Task<OccupationViewModel> Add(OccupationViewModel occupationViewModel)
         {
             var occupation = _mapper.Map<Occupation>(occupationViewModel);
-            occupation.Id = new Guid();
+            //occupation.Id = new Guid();
 
             if (!ExecuteValidation(new OccupationValidation(), occupation)) return null;
 
