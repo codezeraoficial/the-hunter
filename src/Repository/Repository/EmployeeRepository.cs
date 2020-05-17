@@ -4,6 +4,7 @@ using Repository.Context;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Repository.Repository
 {
@@ -27,6 +28,7 @@ namespace Repository.Repository
                 .Include(e => e.Skills)
                 .Include(e => e.Occupations)
                 .Include(e=> e.Address)
+                .Where(e=> !e.Removed)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
     }

@@ -26,7 +26,7 @@ namespace Service.Services
 
         public async Task<IEnumerable<EmployeeViewModel>> GetAll()
         {
-            return _mapper.Map<IEnumerable<EmployeeViewModel>>(await _employeeRepository.GetAll());
+            return _mapper.Map<IEnumerable<EmployeeViewModel>>(await _employeeRepository.Get(e=> !e.Removed));
         }
 
         public async Task<EmployeeViewModel> GetById(Guid id)
@@ -81,21 +81,18 @@ namespace Service.Services
 
         public async Task<bool> Delete(Guid id)
         {
-            if (!_employeeRepository.Get(e => e.Id == id).Result.Any())
+            var employee = await _employeeRepository.GetById(id);
+
+            if (employee == null)
             {
                 Notify("Employee does not exists.");
 
                 return false;
-            }
+            }       
 
-            var address = await _addressRepository.GetAddressByEmployee(id);
+            employee.Remove();
 
-            await _employeeRepository.Delete(id);
-
-            if (address != null)
-            {
-                await _addressRepository.Delete(address.Id);
-            }
+            await _employeeRepository.Update(employee);
 
             return true;
         }
