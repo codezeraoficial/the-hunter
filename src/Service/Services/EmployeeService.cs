@@ -14,12 +14,14 @@ namespace Service.Services
     public class EmployeeService : BaseService, IEmployeeService
     {
         private readonly IEmployeeRepository _employeeRepository;
-        private readonly IAddressRepository _addressRepository;
+        private readonly IAddressService _addressService;
         private readonly IMapper _mapper;
 
-        public EmployeeService(IEmployeeRepository employeeRepository, IAddressRepository addressRepository, IMapper mapper, INotifier notifier): base(notifier)
+        public EmployeeService(IEmployeeRepository employeeRepository,
+            IMapper mapper, INotifier notifier,
+            IAddressService addressService) : base(notifier)
         {
-            _addressRepository = addressRepository;
+            _addressService = addressService;
             _employeeRepository = employeeRepository;
             _mapper = mapper;
         }
@@ -38,10 +40,8 @@ namespace Service.Services
         {
             var employee = _mapper.Map<Employee>(employeeViewModel);
 
-            employee.LinkAddress(employee.AddressId);
 
-            if (!ExecuteValidation(new EmployeeValidation(), employee)
-                || !ExecuteValidation(new AddressValidation(), employee.Address)) return null;
+            if (!ExecuteValidation(new EmployeeValidation(), employee)) return null;
 
             if (_employeeRepository.Get(e=> e.Document == employee.Document).Result.Any())
             {
@@ -49,6 +49,10 @@ namespace Service.Services
 
                 return null;
             }
+
+            var address = await _addressService.Add(employeeViewModel.Address);
+
+            employee.LinkAddress(employee.AddressId);
 
             await _employeeRepository.Add(employee);
             return _mapper.Map<EmployeeViewModel>(employee);
@@ -68,16 +72,13 @@ namespace Service.Services
                 return null;
             }
 
+            await _addressService.Update(employeeViewModel.Address, true);
+
+
             await _employeeRepository.Update(employee);
             return _mapper.Map<EmployeeViewModel>(employee);
         }
 
-        public async Task UpdateAddress(Address address)
-        {
-            if (!ExecuteValidation(new AddressValidation(), address)) return;
-
-            await _addressRepository.Update(address);
-        }
 
         public async Task<bool> Delete(Guid id)
         {
@@ -92,6 +93,10 @@ namespace Service.Services
 
             employee.Remove();
 
+            await _addressService.Delete(id);
+
+            await _employeeRepository.Delete(id);
+
             await _employeeRepository.Update(employee);
 
             return true;
@@ -99,7 +104,6 @@ namespace Service.Services
 
         public void Dispose()
         {
-            _addressRepository?.Dispose();
             _employeeRepository?.Dispose();
         }
 

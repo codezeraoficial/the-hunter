@@ -13,8 +13,6 @@ namespace Service.Interfaces
         Task<EmployeeViewModel> Add(EmployeeViewModel employeeViewModel);
         Task<EmployeeViewModel> Update(EmployeeViewModel employeeViewModel);
         Task<bool> Delete(Guid Id);
-
-        Task UpdateAddress(Address address);
    
     }
 }

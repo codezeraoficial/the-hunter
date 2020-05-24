@@ -12,9 +12,7 @@ namespace Domain.Models.Validations
                 .NotEmpty().WithMessage("The field {PropertyName} must be provided")
                 .Length(2, 100).WithMessage("The field {PropertyName} need to have between {MinLength} and {MaxLength} characteres");
 
-            RuleFor(f => f.Document.Length).Equal(CnpjValidation.CnpjLength)
-                .WithMessage("O campo Documento precisa ter {ComparisonValue} caracteres e foi fornecido {PropertyValue}");
-            RuleFor(f => CnpjValidation.Validate(f.Document)).Equal(false)
+            RuleFor(f => CnpjValidation.Validate(f.Document)).Equal(true)
                 .WithMessage("O documento fornecido é inválido.");
 
         }

@@ -25,6 +25,7 @@ namespace Domain.Models
         {
             Removed = true;
             GenerateChange();
+
         }
     }
 }

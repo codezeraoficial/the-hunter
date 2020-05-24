@@ -18,10 +18,9 @@ namespace Repository.Mappings
 
             builder.Property(c => c.Document)
                  .IsRequired()
-                 .HasColumnType("varchar(20)");        
-                         
-            builder.HasOne(c => c.Address)
-                .WithOne(a => a.Company);
+                 .HasColumnType("varchar(20)");
+
+            builder.HasOne(c => c.Address);                
 
             builder.HasMany(e => e.JobOffers)
                 .WithOne();               

@@ -14,6 +14,5 @@ namespace Service.Interfaces
         Task<CompanyViewModel> Add(CompanyViewModel company);
         Task<CompanyViewModel> Update(CompanyViewModel company);
         Task<bool> Delete(Guid Id);
-        Task UpdateAddress(Address address);
     }
 }

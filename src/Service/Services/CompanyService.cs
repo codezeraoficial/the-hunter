@@ -15,13 +15,13 @@ namespace Service.Services
     {
 
         private readonly ICompanyRepository _companyRepository;
-        private readonly IAddressRepository _addressRepository;
+        private readonly IAddressService _addressService;
         private readonly IMapper _mapper;
 
-        public CompanyService(ICompanyRepository companyRepository, IAddressRepository addressRepository, IMapper mapper, INotifier notifier) : base(notifier)
+        public CompanyService(ICompanyRepository companyRepository, IMapper mapper, INotifier notifier, IAddressService addressService) : base(notifier)
         {
             _companyRepository = companyRepository;
-            _addressRepository = addressRepository;
+            _addressService = addressService;
             _mapper = mapper;
         }
 
@@ -39,14 +39,8 @@ namespace Service.Services
         {
             var company = _mapper.Map<Company>(companyViewModel);
 
-            //company.Id = Guid.NewGuid();
-            //company.AddressId = Guid.NewGuid();
-            //company.Address.Id = company.AddressId.Value;
-
-            if (!ExecuteValidation(new CompanyValidation(), company)
-                || !ExecuteValidation(new AddressValidation(), company.Address)) return null;
-
-
+            if (!ExecuteValidation(new CompanyValidation(), company))
+                return null;
 
             if (_companyRepository.Get(c => c.Document == company.Document).Result.Any())
             {
@@ -55,8 +49,11 @@ namespace Service.Services
                 return null;
             }
 
-            await _companyRepository.Add(company);
+            var address = await _addressService.Add(companyViewModel.Address);
 
+            company.LinkAddress(address.Id);
+
+            await _companyRepository.Add(company);
             return _mapper.Map<CompanyViewModel>(company);
         }
 
@@ -66,7 +63,7 @@ namespace Service.Services
 
             if (!ExecuteValidation(new CompanyValidation(), company))
                 return null;
-                       
+
             if (!_companyRepository.Get(c => c.Id == company.Id).Result.Any())
             {
                 Notify("Company does not exists.");
@@ -74,42 +71,33 @@ namespace Service.Services
                 return null;
             }
 
+            await _addressService.Update(companyViewModel.Address);
+
             await _companyRepository.Update(company);
 
             return _mapper.Map<CompanyViewModel>(company);
         }
 
-        public async Task UpdateAddress(Address address)
-        {
-            if (!ExecuteValidation(new AddressValidation(), address)) return;
-
-            await _addressRepository.Update(address);
-        }
 
         public async Task<bool> Delete(Guid id)
         {
+            var company = await _companyRepository.GetById(id);
 
-            if (!_companyRepository.Get(c => c.Id == id).Result.Any())
+            if (company == null)
             {
                 Notify("Company does not exists.");
 
                 return false;
             }
 
-            if (_companyRepository.GetCompanyJobOffersAddress(id).Result.JobOffers.Any())
-            {
-                Notify("The company has registered contracts.");
-                return false;
-            }
+            company.Remove();
 
-            var address = await _addressRepository.GetAddressByCompany(id);
+
+            await _addressService.Delete(id);
 
             await _companyRepository.Delete(id);
 
-            if (address != null)
-            {
-                await _addressRepository.Delete(address.Id);
-            }
+            await _companyRepository.Update(company);
 
             return true;
 
@@ -117,7 +105,6 @@ namespace Service.Services
 
         public void Dispose()
         {
-            _addressRepository?.Dispose();
             _companyRepository?.Dispose();
         }
     }
